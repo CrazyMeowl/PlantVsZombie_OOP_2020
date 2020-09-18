@@ -1,5 +1,5 @@
 # PlantVsZombie-OOP-Pygame
-# Testing Git
-# PHUC TEST GIT DESKTOP
-# TEST #2
-#tri test Git Desktop
+
+# Download Python, SublimeText 3, Pycharm(optional)
+# Remember to add Python to PATH
+# Open CMD and type : pip install pygame
