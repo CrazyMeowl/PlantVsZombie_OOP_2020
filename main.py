@@ -22,40 +22,24 @@ Board:
 '''
 #import the module
 import pygame,sys
-#start the pygame module
 pygame.init()
-#the size of game window
-bg_width = 1000
-bg_height = 500
-gameWindow = pygame.display.set_mode((bg_width, bg_height))
-
-#set caption
-pygame.display.set_caption("Plant vs Zombies for O.O.P")
-#control the FPS (frame)
-
-
 #state of the game
 gameActive = True
-
-
-
-
-######## DEF GAME FUNCTION ########
-
-
-###### END OF DEF GAME FUNTION ####
-
 ###### Class Define Here #####
-
 #### Class Logic #### 
 class Logic:
 
 	def __init__(self):
+		self.bg_width = 1000
+		self.bg_height = 500
+		self.window	= pygame.display.set_mode((self.bg_width, self.bg_height))
+		pygame.display.set_caption("Plant vs Zombies for O.O.P")
 		self.time = 0
 		self.timecount = 0
 		self.bg = pygame.image.load("Resources/bg.png")
 		self.FPS = 30
 		self.clock = pygame.time.Clock()
+
 	def TimeCounter(self):
 		self.timecount = self.timecount + 1
 		if self.timecount % self.FPS == 0:
@@ -65,16 +49,16 @@ class Logic:
 			##Print the coor of the mouse
 			print("X: " + str(self.Xmouse) + " Y: " + str(self.Ymouse))
 
-	def RedrawBG(self):
-		#redraw the bg on to the window every frame
-		gameWindow.blit(self.bg, (0, 0))
-
-	def MouseTracker(self):
+	def MouseTracker(self):1
 		##find mouse
 		self.Xmouse, self.Ymouse = pygame.mouse.get_pos()
 		##Print the coor of the mouse
 		#print("X: " + str(self.Xmouse) + " Y: " + str(self.Ymouse))
 
+	def RedrawBG(self):
+		#redraw the bg on to the window every frame
+		self.window.blit(self.bg, (0, 0))
+		pygame.display.update()
 ###### End of Class Define ###
 
 #### Some Variable for the game ####
@@ -94,5 +78,4 @@ while gameActive:
 	game.MouseTracker()
 	game.RedrawBG()
 	game.TimeCounter()
-	pygame.display.update()
 	game.clock.tick(game.FPS)
