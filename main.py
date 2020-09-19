@@ -3,7 +3,23 @@ this is the main file for the game
 edit with caution 
 only Push when needed
 '''
+'''
+Board:
 
+	5 row 
+	9 column
+
+	Xstart = 330
+	Ystart = 66
+
+	Xend = 977
+	Yend = 446
+
+	45 blocks
+		size :
+			width = 71
+			height = 76
+'''
 #import the module
 import pygame,sys
 #start the pygame module
