@@ -31,6 +31,7 @@ def RedrawBG():
 
 def MouseTracker():
 	##find mouse
+	global Xmouse , Ymouse
 	Xmouse , Ymouse = pygame.mouse.get_pos()
 	##Print the coor of the mouse
 	print("X: " + str(Xmouse) + " Y: " + str(Ymouse))
@@ -48,6 +49,7 @@ while gameActive:
 	#redraw game window
 	MouseTracker()
 	RedrawBG()
+	pygame.draw.rect(gameWindow,(255,0,0),(Xmouse,Ymouse,71,76),2)
 	pygame.display.update()
 	FPS = 30
 	clock.tick()
