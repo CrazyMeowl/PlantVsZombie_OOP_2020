@@ -18,7 +18,7 @@ try:
 
 		45 blocks
 			size :
-				width = 71
+				width = 72
 				height = 76
 	'''
 	#import the module
@@ -50,7 +50,7 @@ try:
 			self.Board = [
 			[0,0,0,0,0,0,0,0,0],
 			[0,0,0,0,0,0,0,0,0],
-			[0,0,0,0,0,0,0,0,0],
+			[0,0,0,1,0,0,0,0,0],
 			[0,0,0,0,0,0,0,0,0],
 			[0,0,0,0,0,0,0,0,0]]
 
@@ -64,7 +64,7 @@ try:
 				##Print the coor of the mouse
 				#print("X: " + str(self.Xmouse) + " Y: " + str(self.Ymouse))
 				#self.MouseTracker()
-				self.GetBoard()
+				#self.GetBoard()
 
 		def MouseTracker(self):
 			##find mouse
@@ -73,55 +73,19 @@ try:
 			#print("X: " + str(self.Xmouse) + " Y: " + str(self.Ymouse))
 			return self.Xmouse, self.Ymouse
 		def BoardCheck(self):
-			if self.Ymouse > 66 and self.Ymouse < 143:
-				self.YBoard = 67
-				self.Row = 1  
-			elif self.Ymouse < 219:
-				self.YBoard = 143
-				self.Row = 2
-			elif self.Ymouse < 295:
-				self.YBoard = 219
-				self.Row = 3
-			elif self.Ymouse < 371:
-				self.YBoard = 295
-				self.Row = 4
-			elif self.Ymouse < 447:
-				self.YBoard = 371
-				self.Row = 5
-			
-			if self.Xmouse > 329 and self.Xmouse < 402 :
-				self.XBoard = 330
-				self.Col = 1
-			elif self.Xmouse < 474 :
-				self.XBoard = 402
-				self.Col = 2
-			elif self.Xmouse < 546 :
-				self.XBoard = 474
-				self.Col = 3
-			elif self.Xmouse < 618 :
-				self.XBoard = 546 
-				self.Col = 4
-			elif self.Xmouse < 690 :
-				self.XBoard = 618
-				self.Col = 5
-			elif self.Xmouse < 762 :
-				self.XBoard = 690
-				self.Col = 6
-			elif self.Xmouse < 834 :
-				self.XBoard = 762
-				self.Col = 7
-			elif self.Xmouse < 906 :
-				self.XBoard = 834
-				self.Col = 8
-			elif self.Xmouse < 978 :
-				self.XBoard = 906
-				self.Col = 9
-
-			if self.Ymouse < 66 or self.Ymouse > 447 or self.Xmouse < 330 or self.Xmouse > 977:
+			self.Row = int(((self.Ymouse - 67)/76)+1)
+			self.YBoard = ((self.Row - 1) * 76) + 67
+			self.Col = int(((self.Xmouse - 330)/71)+1)
+			self.XBoard = ((self.Col - 1) * 72) + 330
+			if self.Row <= 0 or self.Row > 5 or self.Col <= 0 or self.Col > 9:
 				self.XBoard = 1001
-				self.YBoard = 5001
+				self.YBoard = 501
 				self.Row = 0
 				self.Col = 0
+			print("XBoard: ",self.XBoard)
+			print("YBoard: ",self.YBoard)
+			print("Row: ",self.Row)
+			print("Col: ",self.Col)
 			return self.Row,self.Col
 		def RedrawBG(self):
 			#redraw the bg on to the window every frame
@@ -137,15 +101,29 @@ try:
 			if row != 0 and col != 0:
 				self.Board[row - 1][col - 1] = X
 
-			
+	class Mice:
+		def __init__(self):
+			self.X = 0
+			self.Y = 0
+			self.state = "none"
+	
+		def SetState(self,X):
+			self.state = str(X)
+			print(self.state)
+
+		def getState(self):
+			return self.state
+
 	###### End of Class Define ###
 
 	#### Some Variable for the game ####
 	game = Logic()
+	Mouse = Mice()
 	RowDown = 0
 	RowUp = 0
 	ColDown = 0
 	ColUp = 0
+	Mouse.SetState("Pea")
 	#### End of Variable ####
 	#game loop
 	while gameActive:
@@ -162,8 +140,16 @@ try:
 				game.MouseTracker()
 				RowUp, ColUp = game.BoardCheck()
 				if RowDown == RowUp and ColDown == ColUp:
-					game.SetBoard(RowDown,ColDown,1)
-					#game.GetBoard()
+					if Mouse.state == "Pea":
+						game.SetBoard(RowDown,ColDown,1)
+					elif Mouse.state ==  "Sun":
+						game.SetBoard(RowDown,ColDown,2)
+					elif Mouse.state ==  "Wall":
+						game.SetBoard(RowDown,ColDown,3)
+					elif Mouse.state == "Clear":
+						game.SetBoard(RowDown,ColDown,0)
+					game.GetBoard()
+					
 		#redraw game window
 		#game.MouseTracker()
 		game.RedrawBG()
