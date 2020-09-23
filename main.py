@@ -50,7 +50,7 @@ try:
 			self.Board = [
 			[0,0,0,0,0,0,0,0,0],
 			[0,0,0,0,0,0,0,0,0],
-			[0,0,0,1,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0],
 			[0,0,0,0,0,0,0,0,0],
 			[0,0,0,0,0,0,0,0,0]]
 
@@ -59,7 +59,7 @@ try:
 			self.timecount = self.timecount + 1
 			if self.timecount % self.FPS == 0:
 				self.time = self.time + 1
-				print("Time Passed: ",self.time)
+				#print("Time Passed: ",self.time)
 
 				##Print the coor of the mouse
 				#print("X: " + str(self.Xmouse) + " Y: " + str(self.Ymouse))
@@ -82,16 +82,20 @@ try:
 				self.YBoard = 501
 				self.Row = 0
 				self.Col = 0
+			'''
 			print("XBoard: ",self.XBoard)
 			print("YBoard: ",self.YBoard)
 			print("Row: ",self.Row)
 			print("Col: ",self.Col)
+			'''
 			return self.Row,self.Col
+
 		def RedrawBG(self):
 			#redraw the bg on to the window every frame
 			self.window.blit(self.bg, (0, 0))
 			pygame.display.update()
 		def GetBoard(self):
+			print("Board state")
 			print(self.Board[0])
 			print(self.Board[1])
 			print(self.Board[2])
@@ -151,7 +155,7 @@ try:
 					game.GetBoard()
 					
 		#redraw game window
-		#game.MouseTracker()
+		game.MouseTracker()
 		game.RedrawBG()
 		game.TimeCounter()
 		game.clock.tick(game.FPS)
