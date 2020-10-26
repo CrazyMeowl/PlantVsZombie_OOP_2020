@@ -26,6 +26,10 @@ try:
 	pygame.init()
 	#state of the game
 	gameActive = True
+	menuActive = False
+
+
+
 	###### Class Define Here #####
 	#### Class Logic #### 
 	class Logic:
@@ -35,7 +39,7 @@ try:
 			self.bg_width = 1000
 			self.bg_height = 500
 			self.window	= pygame.display.set_mode((self.bg_width, self.bg_height))
-			pygame.display.set_caption("Plant vs Zombies for O.O.P")
+			pygame.display.set_caption("Plant vs Zombies in O.O.P")
 			#for the time counter
 			self.time = 0
 			self.timecount = 0
@@ -104,7 +108,8 @@ try:
 		def SetBoard(self,row,col,X):
 			if row != 0 and col != 0:
 				self.Board[row - 1][col - 1] = X
-
+	##################### END OF LOGIC CLASS ###############
+	# START OF CLASS MICE #
 	class Mice:
 		def __init__(self):
 			self.X = 0
@@ -117,6 +122,14 @@ try:
 
 		def getState(self):
 			return self.state
+	#END OF CLASS MICE #
+
+	# START OF CLASS PLANT #
+
+	# END OF CLASS PLANT #
+
+
+
 
 	###### End of Class Define ###
 
