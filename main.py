@@ -216,6 +216,30 @@ try:
 			else:
 				self.Frame = self.Frame + 1
 			window.blit(self.Imglist[self.Frame],(self.X,self.Y))
+
+
+	class SunFlower:
+		List = []
+		Imglist = []
+		num = 1
+		while(num <= 30):
+			Imglist.append(pygame.image.load('Resources/Sun/Sun'+ str(num) +'.png'))
+			num = num + 1
+
+		def __init__(self,inRow,inCol):
+			self.R = inRow
+			self.C = inCol
+			self.X = 0
+			self.Y = 0
+			self.Health = 150
+			self.Frame = 0
+
+		def Draw(self,window):
+			if self.Frame +1 >= 30:
+				self.Frame = 0
+			else:
+				self.Frame = self.Frame + 1
+			window.blit(self.Imglist[self.Frame],(self.X,self.Y))
 	# END OF CLASS PLANT #
 
 
