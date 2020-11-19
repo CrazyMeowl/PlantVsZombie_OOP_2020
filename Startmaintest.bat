@@ -1,2 +1,0 @@
-python maintest.py
-Pause
