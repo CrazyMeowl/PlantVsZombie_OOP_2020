@@ -1,2 +1,2 @@
-python menu.py
+python mainmenu.py
 pause
