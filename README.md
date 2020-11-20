@@ -1,6 +1,8 @@
 # PlantVsZombie-OOP-Pygame
-
-# Download Python, SublimeText 3, Pycharm(optional)
+# For all dev:
+ Download Python, SublimeText 3, Pycharm(optional)
 # Remember to add Python to PATH
-# Open CMD and type : pip install pygame
-# mọi thứ m chỉnh o
+
+# For all user:
+ Open CMD and type : pip install pygame
+ Also : pip install pygame_menu
