@@ -3,3 +3,4 @@ __pycache__/main.cpython-38.pyc
 desktop.ini
 *.py
 .idea/workspace.xml
+*.pyc
