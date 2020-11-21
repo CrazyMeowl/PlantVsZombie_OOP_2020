@@ -1,8 +1,8 @@
-# PlantVsZombie-OOP-Pygame
-# For all dev:
- Download Python, SublimeText 3, Pycharm(optional)
- Remember to add Python to PATH
+# PvZ_pygame_OOP
 
-# For all user:
- Open CMD and type : pip install pygame
- Also : pip install pygame_menu
+# NOTE for DEV/USER of the code
+pip install pygame , pip install pygame_menu , Edit carefully 
+# NOTE for DEV only 
+//please do not test this time on this new respo
+//only push when has permission
+//thanks for notice
