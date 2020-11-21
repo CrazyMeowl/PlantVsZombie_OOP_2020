@@ -32,18 +32,22 @@ try:
 	gameActive = True
 	menuActive = False
 
-	###### End of Class Define ###
+
+
+	###### Class Define Here #####
+
+	
 
 	#### Some Variable for the game ####
-	P1 = PeaShooter(2,2)
+	P1 = peaShooter(2,2)
 	#menubutton = button((0,255,0), 150,255,250,100,'Menu')
-	game = Logic()
-	Mouse = Mice()
+	game = logic()
+	Mouse = mice()
 	RowDown = 0
 	RowUp = 0
 	ColDown = 0
 	ColUp = 0
-	Mouse.SetState("Pea")
+	Mouse.setState("Pea")
 	#### End of Variable ####
 
 
@@ -59,16 +63,10 @@ try:
 				gameActive = False
 				quit()
 			if event.type == pygame.MOUSEBUTTONDOWN:
-				X1,Y1 = game.MouseTracker()
-				RowDown, ColDown = game.BoardCheck(X1,Y1)
+				pass
 			if event.type == pygame.MOUSEBUTTONUP:
-				X2,Y2 = game.MouseTracker()
-				RowUp, ColUp = game.BoardCheck(X2,Y2)
-				if RowDown == RowUp and ColDown == ColUp:
-					run = os.system("cls")
-					game.SetBoard(RowDown,ColDown,Mouse.GetState())
-					game.GetBoard()
-					
+				pass
+				
 		#redraw game window
 
 		# game.MouseTracker()
@@ -76,13 +74,13 @@ try:
 		if(gameActive == 1):
 			game.gameRedraw()
 			#menubutton.draw(game.window,(0,0,0))
-			P1.Draw(game.window)
+			P1.draw(game.window)
 		else:
 			game.menuRedraw()
 
 		game.dispUpdate() 
 
-		game.TimeCounter()
+		game.timeCounter()
 		game.clock.tick(game.FPS)
 		
 ## for bug and print out bug (only for compile error or runtime error) [ DO NOT FIX ]

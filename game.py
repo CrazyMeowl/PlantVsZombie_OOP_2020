@@ -1,7 +1,7 @@
 #This try is for error catching 
 try:
 	import pygame
-	class Logic:
+	class logic:
 
 		def __init__(self):
 			#for starting the window
@@ -15,8 +15,8 @@ try:
 			#for redraw
 			self.bg = pygame.image.load("Resources/bg.png")
 				#for the seed
-			self.seedX = 20
-			self.seedY = 10
+			self.__seedX = 20
+			self.__seedY = 10
 			self.PEASEED = pygame.image.load("Resources/SeedPea.png")
 			self.SUNSEED = pygame.image.load("Resources/SeedSun.png")
 			self.WALSEED = pygame.image.load("Resources/SeedWal.png")
@@ -35,7 +35,7 @@ try:
 			[0,0,0,0,0,0,0,0,0]]
 
 
-		def TimeCounter(self):
+		def timeCounter(self):
 			self.timecount = self.timecount + 1
 			if self.timecount % self.FPS == 0:
 				self.time = self.time + 1
@@ -46,14 +46,14 @@ try:
 				#self.MouseTracker()
 				#self.GetBoard()
 
-		def MouseTracker(self):
+		def mouseTracker(self):
 			##find mouse
 			self.Xmouse, self.Ymouse = pygame.mouse.get_pos()
 			##Print the coor of the mouse
 			print("X: " + str(self.Xmouse) + " Y: " + str(self.Ymouse))
 			return self.Xmouse, self.Ymouse
 
-		def BoardCheck(self,inX,inY):
+		def boardCheck(self,inX,inY):
 			self.Row = int(((inY - 67)/76)+1)
 			self.YBoard = ((self.Row - 1) * 76) + 67
 			self.Col = int(((inX - 330)/71)+1)
@@ -74,10 +74,10 @@ try:
 		def gameRedraw(self):
 			#redraw the bg on to the window every frame
 			self.window.blit(self.bg, (0, 0))
-			self.window.blit(self.PEASEED,(self.seedX,self.seedY))
-			self.window.blit(self.SUNSEED,(self.seedX + 66,self.seedY))
-			self.window.blit(self.WALSEED,(self.seedX + 66 * 2,self.seedY))
-			self.window.blit(self.SHOVEL,(self.seedX + 66 * 3,self.seedY))
+			self.window.blit(self.PEASEED,(self.__seedX,self.__seedY))
+			self.window.blit(self.SUNSEED,(self.__seedX + 66,self.__seedY))
+			self.window.blit(self.WALSEED,(self.__seedX + 66 * 2,self.__seedY))
+			self.window.blit(self.SHOVEL,(self.__seedX + 66 * 3,self.__seedY))
 
 		def menuRedraw(self):
 			pass
@@ -87,7 +87,7 @@ try:
 		def dispUpdate(self):
 			pygame.display.update()
 		#print out the board
-		def GetBoard(self):
+		def getBoard(self):
 			print("Board state")
 			print(self.Board[0])
 			print(self.Board[1])
@@ -95,23 +95,23 @@ try:
 			print(self.Board[3])
 			print(self.Board[4])
 			return self.Board
-		def SetBoard(self,row,col,X):
+		def setBoard(self,row,col,X):
 			if row != 0 and col != 0:
 				self.Board[row - 1][col - 1] = X
 	##################### END OF LOGIC CLASS ###############
 
 	# START OF CLASS MICE #
-	class Mice:
+	class mice:
 		def __init__(self):
 			self.__X = 0
 			self.__Y = 0
 			self.__state = "none"
 		
-		def SetState(self,X):
+		def setState(self,X):
 			self.__state = str(X)
 			#print(self.state)
 
-		def GetState(self):
+		def getState(self):
 			print(self.__state)
 			if self.__state == "Pea":
 				return 1
@@ -122,7 +122,7 @@ try:
 			elif self.__state == "Clear":
 				return 0
 			
-		def Update(self):
+		def update(self):
 			self.__X,self.__Y = pygame.mouse.get_pos()
 			##Print the coor of the mouse
 			print("X: " + str(self.__X) + " Y: " + str(self.__Y))

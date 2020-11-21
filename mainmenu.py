@@ -1,17 +1,22 @@
+
 #This try is for error catching 
 try:
-		
 	import pygame
 	import os
 	import pygame_menu
+
 	pygame.init()
 	surface = pygame.display.set_mode((1000, 500))
 
+
 	def start_the_game():
-		print("HEHE BOIII")
+		game = os.system("python main.py")
+		print(game)
+
 
 	def quit_the_game():
-		pygame.events.EXIT()
+		pygame_menu.events.EXIT()
+
 
 	mytheme = pygame_menu.themes.THEME_ORANGE.copy()
 	mytheme.title_background_color=(0, 0, 0)
@@ -25,7 +30,7 @@ try:
 	menu.add_button('Play Trial', start_the_game)
 	menu.add_button('?!? Quit ?!?', pygame_menu.events.EXIT)
 	menu.mainloop(surface)
-		
+			
 ## for bug and print out bug (only for compile error or runtime error) [ DO NOT FIX ]
 except Exception as Bug:
 	print(Bug)
