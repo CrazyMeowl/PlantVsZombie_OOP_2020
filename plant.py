@@ -4,38 +4,77 @@ try:
 	# START OF CLASS PLANT #
 	class plant:
 		List = []
-		Imglist = []
-		num = 1
-		while(num <= 30):
-			Imglist.append(pygame.image.load('Resources/blank.png'))
-			num = num + 1
-
+		plantImgList = []
+		def loadResource(ImgList):
+			num = 1
+			while(num <= 30):
+				ImgList.append(pygame.image.load('Resources/blank.png'))
+				num = num + 1
+			return ImgList
+		plantImgList = loadResource(plantImgList)
 
 
 		def __init__(self,inRow,inCol):
-			self.R = inRow
-			self.C = inCol
-			self.X = 0
-			self.Y = 0
-			self.Health = 150
-			self.Frame = 0
+			self.r = inRow
+			self.c = inCol
+			self.x = self.c*72 + 330
+			self.y = self.r*76 + 66
+			self.health = 150
+			self.__frame = 0
 
 		
 
 		def draw(self,window):
-			if self.Frame +1 >= 30:
-				self.Frame = 0
+			if self.__frame +1 == 30:
+				self.__frame = 0
 			else:
-				self.Frame = self.Frame + 1
-			window.blit(self.Imglist[self.Frame],(self.X,self.Y))
-	# END OF CLASS PLANT #
-	# inheritance
+				self.__frame = self.__frame + 1
+			window.blit(self.ImgList[self.__frame],(self.x,self.y))
+
+
 	class peaShooter(plant):
-		Imglist = []
-		num = 1
-		while(num <= 30):
-			Imglist.append(pygame.image.load('Resources/Pea/Pea'+ str(num) +'.png'))
-			num = num + 1
+		ImgList = []
+		def loadResource(ImgList):
+			num = 1
+			while(num <= 30):
+				ImgList.append(pygame.image.load('Resources/Pea/Pea'+ str(num) +'.png'))
+				num = num + 1
+			return ImgList
+		ImgList = loadResource(ImgList)
+
+	class sunFlower(plant):
+		ImgList = []
+		def loadResource(ImgList):
+			num = 1
+			while(num <= 30):
+				ImgList.append(pygame.image.load('Resources/Sun/Sun'+ str(num) +'.png'))
+				num = num + 1
+			return ImgList
+		ImgList = loadResource(ImgList)
+
+	class wallNutt(plant):
+
+		ImgList = []
+		ImgList.append(pygame.image.load('Resources/Wal/Wal1.png'))
+		ImgList.append(pygame.image.load('Resources/Wal/Wal2.png'))
+		ImgList.append(pygame.image.load('Resources/Wal/Wal3.png'))
+
+		def __init__(self,inRow,inCol):
+			self.r = inRow
+			self.c = inCol
+			self.x = self.c*72 + 330
+			self.y = self.r*76 + 66
+			self.health = 300
+			self.__frame = 0
+
+		def draw(self,window):
+			if self.health <= 300 and self.health >= 200:
+				self.__frame = 0
+			elif self.health < 200 and self.health >= 100:
+				self.__frame = 1
+			else:
+				self.__frame = 2
+			window.blit(self.ImgList[self.__frame],(self.x,self.y))
 
 
 

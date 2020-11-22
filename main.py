@@ -39,7 +39,9 @@ try:
 	
 
 	#### Some Variable for the game ####
-	P1 = peaShooter(2,2)
+	P1 = peaShooter(3,2)
+	P2 = sunFlower(2,2)
+	P3 = wallNutt(4,2)
 	#menubutton = button((0,255,0), 150,255,250,100,'Menu')
 	game = logic()
 	Mouse = mice()
@@ -75,6 +77,9 @@ try:
 			game.gameRedraw()
 			#menubutton.draw(game.window,(0,0,0))
 			P1.draw(game.window)
+			P2.draw(game.window)
+			P3.draw(game.window)
+			P3.health = P3.health - 10
 		else:
 			game.menuRedraw()
 
