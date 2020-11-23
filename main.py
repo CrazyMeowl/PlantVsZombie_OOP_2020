@@ -31,6 +31,7 @@ try:
 	#state of the game
 	gameActive = True
 	menuActive = False
+	PAUSE = False
 
 
 
@@ -49,12 +50,12 @@ try:
 	RowUp = 0
 	ColDown = 0
 	ColUp = 0
-	Mouse.setState("Pea")
+	Mouse.setState(1)
 	#### End of Variable ####
 
 
 	#### C L E A R   S C R E E N ####
-	run = os.system("cls")
+	game.clearConsole()
 	#################################
 	#game loop
 	while gameActive:
@@ -65,10 +66,24 @@ try:
 				gameActive = False
 				quit()
 			if event.type == pygame.MOUSEBUTTONDOWN:
-				pass
-			if event.type == pygame.MOUSEBUTTONUP:
-				pass
+				if(game.isHoverOnBoard()):
+					#print(game.getColRow())
+					xd,yd = game.getColRow()
+				if(game.isHoverOnSeed()):
+					Mouse.setState(game.hoverOnSeed())
 				
+					
+			if event.type == pygame.MOUSEBUTTONUP:
+				if(game.isHoverOnBoard()):
+					#print(game.getColRow())
+					xu,yu = game.getColRow()
+					if(xu == xd and yu == yd):
+						game.setBoard(xd,yd,Mouse.getStateInString())
+				game.clearConsole()
+				game.getBoard()
+			
+						
+
 		#redraw game window
 
 		# game.MouseTracker()
@@ -79,7 +94,7 @@ try:
 			P1.draw(game.window)
 			P2.draw(game.window)
 			P3.draw(game.window)
-			P3.health = P3.health - 10
+			P3.health = P3.health - 5
 		else:
 			game.menuRedraw()
 
@@ -90,7 +105,7 @@ try:
 		
 ## for bug and print out bug (only for compile error or runtime error) [ DO NOT FIX ]
 except Exception as Bug:
-	print(Bug)
+	print("main.py",Bug)
 	print("Please report the bug")
 	input("Double Press Enter to continue !!")
 	input()

@@ -1,4 +1,3 @@
-
 #This try is for error catching 
 try:
 	import pygame
