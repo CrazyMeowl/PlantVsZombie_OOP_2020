@@ -14,7 +14,7 @@ try:
 		plantImgList = loadResource(plantImgList)
 
 
-		def __init__(self,inRow,inCol):
+		def __init__(self,inCol,inRow):
 			self.r = inRow
 			self.c = inCol
 			self.x = self.c*72 + 330
@@ -59,7 +59,7 @@ try:
 		ImgList.append(pygame.image.load('Resources/Wal/Wal2.png'))
 		ImgList.append(pygame.image.load('Resources/Wal/Wal3.png'))
 
-		def __init__(self,inRow,inCol):
+		def __init__(self,inCol,inRow):
 			self.r = inRow
 			self.c = inCol
 			self.x = self.c*72 + 330

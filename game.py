@@ -2,6 +2,7 @@
 try:
 	import pygame
 	import os
+	from plant import *
 	class logic:
 
 		def __init__(self):
@@ -28,7 +29,7 @@ try:
 			self.Xmouse = 0
 			self.Ymouse = 0
 			#for the board
-			self.Board = [
+			self.board = [
 			["nul","nul","nul","nul","nul","nul","nul","nul","nul"],
 			["nul","nul","nul","nul","nul","nul","nul","nul","nul"],
 			["nul","nul","nul","nul","nul","nul","nul","nul","nul"],
@@ -45,7 +46,7 @@ try:
 				##Print the coor of the mouse
 				#print("X: " + str(self.Xmouse) + " Y: " + str(self.Ymouse))
 				#self.MouseTracker()
-				#self.GetBoard()
+				#self.Getboard()
 
 		def gameRedraw(self):
 			#redraw the bg on to the window every frame
@@ -64,15 +65,15 @@ try:
 			pygame.display.update()
 		#print out the board
 		def getBoard(self):
-			print("Board state")
-			print(self.Board[0])
-			print(self.Board[1])
-			print(self.Board[2])
-			print(self.Board[3])
-			print(self.Board[4])
-			return self.Board
-		def setBoard(self,row,col,X):
-			self.Board[row][col] = X
+			print("board state")
+			print(self.board[0])
+			print(self.board[1])
+			print(self.board[2])
+			print(self.board[3])
+			print(self.board[4])
+			return self.board
+		def setBoard(self,inCol,inRow,mouseStateInString):
+			self.board[inRow][inCol] = mouseStateInString
 
 		def isHoverOnBoard(self):
 			x,y = pygame.mouse.get_pos()
@@ -83,8 +84,8 @@ try:
 		def getColRow(self):
 			x,y = pygame.mouse.get_pos()
 			if(x >= 330 and x <= 977 and y>=66 and y <= 446):
-				row = int((x-330)/72)
-				col = int((y-66)/76)
+				col = int((x-330)/72)
+				row = int((y-66)/76)
 				return col,row
 
 		def isHoverOnSeed(self):
@@ -97,10 +98,32 @@ try:
 			x,y = pygame.mouse.get_pos()
 			if(x >= 20 and x <= 20+66*4 and y >= 10 and y <= 10 + 91):
 				state = int((x-20)/66)+1
+				print(state)
 				return state
+
 			
 		def clearConsole(self):
 			os.system("cls")
+		plantList = []
+
+		def addAPlant(self,inCol,inRow,mouseStateInString):
+			if mouseStateInString == 'pea':
+				self.plantList.append(peaShooter(inCol,inRow))
+			elif mouseStateInString == 'sun':
+				self.plantList.append(sunFlower(inCol,inRow))
+			else:
+				self.plantList.append(wallNutt(inCol,inRow))
+
+		def removePlant(self,inCol,inRow):
+			i = 0
+			while i < len(self.plantList):
+				for plant in self.plantList:
+					if(plant.c == inCol and plant.r == inRow):
+						#print(arraylist.index(pea))
+						self.plantList.pop(self.plantList.index(plant))
+				i = i + 1
+		
+
 	##################### END OF LOGIC CLASS ###############
 
 	# START OF CLASS MICE #
@@ -121,7 +144,7 @@ try:
 			if self.state == 3:
 				self.stateInString = 'wal'
 			if self.state == 4:
-				self.stateInString = 'nul'
+				self.stateInString = 'clr'
 			#print(self.state)
 			#print(self.stateInString)
 

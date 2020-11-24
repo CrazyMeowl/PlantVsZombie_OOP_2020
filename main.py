@@ -27,6 +27,9 @@ try:
 	import pygame,sys
 	from game import *
 	from plant import *
+	from zombie import *
+	#from mainmenu import *
+
 	pygame.init()
 	#state of the game
 	gameActive = True
@@ -43,6 +46,7 @@ try:
 	P1 = peaShooter(3,2)
 	P2 = sunFlower(2,2)
 	P3 = wallNutt(4,2)
+	Z1 = zombie(4,8)
 	#menubutton = button((0,255,0), 150,255,250,100,'Menu')
 	game = logic()
 	Mouse = mice()
@@ -77,8 +81,18 @@ try:
 				if(game.isHoverOnBoard()):
 					#print(game.getColRow())
 					xu,yu = game.getColRow()
+					print(xu,yu)
 					if(xu == xd and yu == yd):
-						game.setBoard(xd,yd,Mouse.getStateInString())
+						if(Mouse.getStateInString() == 'clr'):
+							game.setBoard(xd,yd,'nul')
+							game.removePlant(xd,yd)
+						else:
+							if(game.board[yd][xd] == 'nul'):
+								game.setBoard(xd,yd,Mouse.getStateInString())
+								game.addAPlant(xd,yd,Mouse.getStateInString())
+							
+							
+								
 				game.clearConsole()
 				game.getBoard()
 			
@@ -91,9 +105,10 @@ try:
 		if(gameActive == 1):
 			game.gameRedraw()
 			#menubutton.draw(game.window,(0,0,0))
-			P1.draw(game.window)
-			P2.draw(game.window)
-			P3.draw(game.window)
+			for plant in game.plantList:
+				plant.draw(game.window)
+			Z1.move()
+			Z1.draw(game.window)
 			P3.health = P3.health - 5
 		else:
 			game.menuRedraw()
