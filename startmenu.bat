@@ -1,2 +1,0 @@
-python mainmenu.py
-pause

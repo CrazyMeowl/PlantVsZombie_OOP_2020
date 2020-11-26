@@ -22,6 +22,8 @@ try:
 			self.health = 150
 			self.__frame = 0
 
+			self.rightBorder = self.x + 36
+
 		
 
 		def draw(self,window):
@@ -66,6 +68,7 @@ try:
 			self.y = self.r*76 + 66
 			self.health = 300
 			self.__frame = 0
+			self.rightBorder = self.x + 36
 
 		def draw(self,window):
 			if self.health <= 300 and self.health >= 200:

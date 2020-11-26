@@ -5,11 +5,10 @@ try:
 	from plant import *
 	class logic:
 
-		def __init__(self):
+		def __init__(self,surface):
 			#for starting the window
-			self.__bg_width = 1000
-			self.__bg_height = 500
-			self.window	= pygame.display.set_mode((self.__bg_width, self.__bg_height))
+			
+			self.window	= surface
 			pygame.display.set_caption("Plant vs Zombies in O.O.P")
 			#for the time counter
 			self.time = 0
@@ -30,12 +29,14 @@ try:
 			self.Ymouse = 0
 			#for the board
 			self.board = [
-			["nul","nul","nul","nul","nul","nul","nul","nul","nul"],
-			["nul","nul","nul","nul","nul","nul","nul","nul","nul"],
-			["nul","nul","nul","nul","nul","nul","nul","nul","nul"],
-			["nul","nul","nul","nul","nul","nul","nul","nul","nul"],
-			["nul","nul","nul","nul","nul","nul","nul","nul","nul"]]
+			["   ","   ","   ","   ","   ","   ","   ","   ","   "],
+			["   ","   ","   ","   ","   ","   ","   ","   ","   "],
+			["   ","   ","   ","   ","   ","   ","   ","   ","   "],
+			["   ","   ","   ","   ","   ","   ","   ","   ","   "],
+			["   ","   ","   ","   ","   ","   ","   ","   ","   "]]
 
+		def resetthegame():
+			pass
 
 		def timeCounter(self):
 			self.timecount = self.timecount + 1
@@ -94,16 +95,24 @@ try:
 				return True
 			else:
 				return False
+		'''
 		def hoverOnSeed(self):
 			x,y = pygame.mouse.get_pos()
 			if(x >= 20 and x <= 20+66*4 and y >= 10 and y <= 10 + 91):
 				state = int((x-20)/66)+1
 				print(state)
 				return state
+		'''
+		def callPauseMenu(self,state):
+			state = 'pausemenu'
+			return state
+			
 
 			
 		def clearConsole(self):
 			os.system("cls")
+
+		#plant list for the game (static)
 		plantList = []
 
 		def addAPlant(self,inCol,inRow,mouseStateInString):
@@ -111,7 +120,7 @@ try:
 				self.plantList.append(peaShooter(inCol,inRow))
 			elif mouseStateInString == 'sun':
 				self.plantList.append(sunFlower(inCol,inRow))
-			else:
+			elif mouseStateInString == 'wal':
 				self.plantList.append(wallNutt(inCol,inRow))
 
 		def removePlant(self,inCol,inRow):
