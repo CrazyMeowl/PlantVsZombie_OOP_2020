@@ -15,15 +15,21 @@ try:
 			self.timecount = 0
 			#for redraw
 			self.bg = pygame.image.load("Resources/bg.png")
-				#for the seed
+			#for the seed
 			self.__seedX = 20
 			self.__seedY = 10
 			self.PEASEED = pygame.image.load("Resources/SeedPea.png")
 			self.SUNSEED = pygame.image.load("Resources/SeedSun.png")
 			self.WALSEED = pygame.image.load("Resources/SeedWal.png")
 			self.SHOVEL = pygame.image.load("Resources/Shovel.png")
+			#for the pause menu
+			self.PAUSEBUTTON = pygame.image.load("Resources/pause.png")
+			self.xPause = 50
+			self.yPause = 72*6
+			#for the game
 			self.FPS = 30
 			self.clock = pygame.time.Clock()
+
 			#for MouseTracker
 			self.Xmouse = 0
 			self.Ymouse = 0
@@ -56,6 +62,7 @@ try:
 			self.window.blit(self.SUNSEED,(self.__seedX + 66,self.__seedY))
 			self.window.blit(self.WALSEED,(self.__seedX + 66 * 2,self.__seedY))
 			self.window.blit(self.SHOVEL,(self.__seedX + 66 * 3,self.__seedY))
+			self.window.blit(self.PAUSEBUTTON,(self.xPause,self.yPause))
 
 		def menuRedraw(self):
 			pass
@@ -88,25 +95,35 @@ try:
 				col = int((x-330)/72)
 				row = int((y-66)/76)
 				return col,row
-
+		#seed part
 		def isHoverOnSeed(self):
 			x,y = pygame.mouse.get_pos()
-			if(x >= 20 and x <= 20+66*4 and y >= 10 and y <= 10 + 91):
+			if(x >= self.__seedX and x <= self.__seedX+66*4 and y >= self.__seedY and y <= self.__seedY + 91):
 				return True
 			else:
 				return False
-		'''
+		
 		def hoverOnSeed(self):
 			x,y = pygame.mouse.get_pos()
-			if(x >= 20 and x <= 20+66*4 and y >= 10 and y <= 10 + 91):
+			if(x >= self.__seedX and x <= self.__seedX+66*4 and y >= self.__seedY and y <= self.__seedY + 91):
 				state = int((x-20)/66)+1
 				print(state)
 				return state
-		'''
+		## end of seed part
+
+		#pause menu part
+		def isHoverOnPause(self):
+			x,y = pygame.mouse.get_pos()
+			
+			if(x >= self.xPause and x <= self.xPause + 50 and y>= self.yPause and y <= self.yPause + 50):
+				return True
+			else:
+				return False
+
 		def callPauseMenu(self,state):
 			state = 'pausemenu'
 			return state
-			
+		##pause menu part
 
 			
 		def clearConsole(self):

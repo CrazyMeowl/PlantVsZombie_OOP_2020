@@ -91,7 +91,8 @@ try:
 						#print(game.getColRow())
 						xd,yd = game.getColRow()
 					if(game.isHoverOnSeed()):
-						#Mouse.setState(game.hoverOnSeed())
+						Mouse.setState(game.hoverOnSeed())
+					if(game.isHoverOnPause()):
 						isActive = game.callPauseMenu(isActive)
 						
 						
