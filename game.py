@@ -18,14 +18,14 @@ try:
 			#for the seed
 			self.__seedX = 20
 			self.__seedY = 10
-			self.PEASEED = pygame.image.load("Resources/SeedPea.png")
-			self.SUNSEED = pygame.image.load("Resources/SeedSun.png")
-			self.WALSEED = pygame.image.load("Resources/SeedWal.png")
-			self.SHOVEL = pygame.image.load("Resources/Shovel.png")
+			#self.PEASEED = pygame.image.load("Resources/SeedPea.png")
+			#self.SUNSEED = pygame.image.load("Resources/SeedSun.png")
+			#self.WALSEED = pygame.image.load("Resources/SeedWal.png")
+			#self.SHOVEL = pygame.image.load("Resources/Shovel.png")
 			#for the pause menu
-			self.PAUSEBUTTON = pygame.image.load("Resources/pause.png")
-			self.xPause = 50
-			self.yPause = 72*6
+			#self.PAUSEBUTTON = pygame.image.load("Resources/pause.png")
+			self.xPause = 20
+			self.yPause = 440
 			#for the game
 			self.FPS = 30
 			self.clock = pygame.time.Clock()
@@ -40,6 +40,21 @@ try:
 			["   ","   ","   ","   ","   ","   ","   ","   ","   "],
 			["   ","   ","   ","   ","   ","   ","   ","   ","   "],
 			["   ","   ","   ","   ","   ","   ","   ","   ","   "]]
+			self.frame = 0
+
+			nonsense = 1
+			self.peaImgList = []
+			self.sunImgList = []
+			self.walImgList = []
+			self.walImgList.append(pygame.image.load('Resources/Wal/Wal1.png'))
+			self.walImgList.append(pygame.image.load('Resources/Wal/Wal2.png'))
+			self.walImgList.append(pygame.image.load('Resources/Wal/Wal3.png'))
+			while(nonsense <= 30):
+				self.peaImgList.append(pygame.image.load('Resources/Pea/Pea'+ str(nonsense) +'.png'))
+				self.sunImgList.append(pygame.image.load('Resources/Sun/Sun'+ str(nonsense) +'.png'))
+				nonsense = nonsense + 1
+
+
 
 		def resetthegame():
 			pass
@@ -58,11 +73,11 @@ try:
 		def gameRedraw(self):
 			#redraw the bg on to the window every frame
 			self.window.blit(self.bg, (0, 0))
-			self.window.blit(self.PEASEED,(self.__seedX,self.__seedY))
-			self.window.blit(self.SUNSEED,(self.__seedX + 66,self.__seedY))
-			self.window.blit(self.WALSEED,(self.__seedX + 66 * 2,self.__seedY))
-			self.window.blit(self.SHOVEL,(self.__seedX + 66 * 3,self.__seedY))
-			self.window.blit(self.PAUSEBUTTON,(self.xPause,self.yPause))
+			#self.window.blit(self.PEASEED,(self.__seedX,self.__seedY))
+			#self.window.blit(self.SUNSEED,(self.__seedX + 66,self.__seedY))
+			#self.window.blit(self.WALSEED,(self.__seedX + 66 * 2,self.__seedY))
+			#self.window.blit(self.SHOVEL,(self.__seedX + 66 * 3,self.__seedY))
+			#self.window.blit(self.PAUSEBUTTON,(self.xPause,self.yPause))
 
 		def menuRedraw(self):
 			pass
@@ -148,6 +163,24 @@ try:
 						#print(arraylist.index(pea))
 						self.plantList.pop(self.plantList.index(plant))
 				i = i + 1
+
+		def drawPlant(self):
+			#self.board
+			if self.frame +1 == 30:
+				self.frame = 0
+			else:
+				self.frame = self.frame + 1
+			y = 0
+			x = 0
+			while(y <= 4):
+				x = 0
+				while(x <= 8):
+					if self.board[y][x] == 'pea':
+						self.window.blit(self.peaImgList[self.frame],(330 + x * 72,66 + y * 76))
+					if self.board[y][x] == 'sun':
+						self.window.blit(self.sunImgList[self.frame],(330 + x * 72,66 + y * 76))
+					x += 1
+				y += 1
 		
 
 	##################### END OF LOGIC CLASS ###############
