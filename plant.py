@@ -27,11 +27,7 @@ try:
 		
 
 		def draw(self,window):
-			if self.__frame +1 == 30:
-				self.__frame = 0
-			else:
-				self.__frame = self.__frame + 1
-			window.blit(self.ImgList[self.__frame],(self.x,self.y))
+			pass
 
 
 	class peaShooter(plant):

@@ -43,9 +43,6 @@ try:
 
 
 	#### Some Variable for the game ####
-	P1 = peaShooter(3,2)
-	P2 = sunFlower(2,2)
-	P3 = wallNutt(4,2)
 	Z1 = zombie(4,8)
 	#menubutton = button((0,255,0), 150,255,250,100,'Menu')
 	game = logic(surface)
@@ -86,7 +83,8 @@ try:
 				if event.type == pygame.QUIT:
 					isActive = 'menu'
 					quit()
-				if event.type == pygame.MOUSEBUTTONDOWN:
+				
+				elif event.type == pygame.MOUSEBUTTONDOWN:
 					if(game.isHoverOnBoard()):
 						#print(game.getColRow())
 						xd,yd = game.getColRow()
@@ -97,7 +95,7 @@ try:
 						
 						
 						
-				if event.type == pygame.MOUSEBUTTONUP:
+				elif event.type == pygame.MOUSEBUTTONUP:
 					if(game.isHoverOnBoard()):
 						#print(game.getColRow())
 						xu,yu = game.getColRow()
@@ -110,19 +108,21 @@ try:
 								if(game.board[yd][xd] == '   '):
 									game.setBoard(xd,yd,Mouse.getStateInString())
 									game.addAPlant(xd,yd,Mouse.getStateInString())
+				else:
+					pass	
 								
-								
-									
-					game.clearConsole()
-					game.getBoard()
-				
-				game.gameRedraw()
-				#menubutton.draw(game.window,(0,0,0))
-				for plant in game.plantList:
-					plant.draw(game.window)
-				Z1.move()
-				Z1.draw(game.window)
-				P3.health = P3.health - 5
+						
+			game.clearConsole()
+			game.getBoard()
+			game.gameRedraw()
+			#menubutton.draw(game.window,(0,0,0))
+			
+			for plant in game.plantList:
+				plant.draw(game.window)
+
+			Z1.move()
+			Z1.draw(game.window)
+			game.drawPlant()
 			
 
 			game.dispUpdate() 
