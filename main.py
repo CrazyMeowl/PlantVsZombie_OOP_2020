@@ -65,6 +65,7 @@ try:
 	while True:
 		while isActive == 'mainmenu':
 			mainMenu.menu.mainloop(surface)
+			game.resetTheGame()
 			if(mainMenu.menu.enable() == None):
 				isActive = 'game'
 
@@ -108,12 +109,14 @@ try:
 								if(game.board[yd][xd] == '   '):
 									game.setBoard(xd,yd,Mouse.getStateInString())
 									game.addAPlant(xd,yd,Mouse.getStateInString())
+									game.clearConsole()
+									game.getBoard()
+							
 				else:
 					pass	
 								
 						
-			game.clearConsole()
-			game.getBoard()
+			
 			game.gameRedraw()
 			#menubutton.draw(game.window,(0,0,0))
 			

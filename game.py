@@ -18,16 +18,10 @@ try:
 			#for the seed
 			self.__seedX = 20
 			self.__seedY = 10
-			#self.PEASEED = pygame.image.load("Resources/SeedPea.png")
-			#self.SUNSEED = pygame.image.load("Resources/SeedSun.png")
-			#self.WALSEED = pygame.image.load("Resources/SeedWal.png")
-			#self.SHOVEL = pygame.image.load("Resources/Shovel.png")
-			#for the pause menu
-			#self.PAUSEBUTTON = pygame.image.load("Resources/pause.png")
 			self.xPause = 20
 			self.yPause = 440
 			#for the game
-			self.FPS = 30
+			self.FPS = 15
 			self.clock = pygame.time.Clock()
 
 			#for MouseTracker
@@ -52,35 +46,26 @@ try:
 			while(nonsense <= 30):
 				self.peaImgList.append(pygame.image.load('Resources/Pea/Pea'+ str(nonsense) +'.png'))
 				self.sunImgList.append(pygame.image.load('Resources/Sun/Sun'+ str(nonsense) +'.png'))
-				nonsense = nonsense + 1
+				nonsense = nonsense + 2
 
 
 
-		def resetthegame():
-			pass
+		def resetTheGame(self):
+			self.board = [
+				["   ","   ","   ","   ","   ","   ","   ","   ","   "],
+				["   ","   ","   ","   ","   ","   ","   ","   ","   "],
+				["   ","   ","   ","   ","   ","   ","   ","   ","   "],
+				["   ","   ","   ","   ","   ","   ","   ","   ","   "],
+				["   ","   ","   ","   ","   ","   ","   ","   ","   "]]
+			self.plantList = []
 
 		def timeCounter(self):
 			self.timecount = self.timecount + 1
 			if self.timecount % self.FPS == 0:
 				self.time = self.time + 1
-				#print("Time Passed: ",self.time)
-
-				##Print the coor of the mouse
-				#print("X: " + str(self.Xmouse) + " Y: " + str(self.Ymouse))
-				#self.MouseTracker()
-				#self.Getboard()
-
 		def gameRedraw(self):
 			#redraw the bg on to the window every frame
 			self.window.blit(self.bg, (0, 0))
-			#self.window.blit(self.PEASEED,(self.__seedX,self.__seedY))
-			#self.window.blit(self.SUNSEED,(self.__seedX + 66,self.__seedY))
-			#self.window.blit(self.WALSEED,(self.__seedX + 66 * 2,self.__seedY))
-			#self.window.blit(self.SHOVEL,(self.__seedX + 66 * 3,self.__seedY))
-			#self.window.blit(self.PAUSEBUTTON,(self.xPause,self.yPause))
-
-		def menuRedraw(self):
-			pass
 
 
 		#update the disp
@@ -95,6 +80,7 @@ try:
 			print(self.board[3])
 			print(self.board[4])
 			return self.board
+			
 		def setBoard(self,inCol,inRow,mouseStateInString):
 			self.board[inRow][inCol] = mouseStateInString
 
@@ -166,7 +152,7 @@ try:
 
 		def drawPlant(self):
 			#self.board
-			if self.frame +1 == 30:
+			if self.frame + 1 == 15:
 				self.frame = 0
 			else:
 				self.frame = self.frame + 1

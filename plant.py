@@ -36,7 +36,7 @@ try:
 			num = 1
 			while(num <= 30):
 				ImgList.append(pygame.image.load('Resources/Pea/Pea'+ str(num) +'.png'))
-				num = num + 1
+				num = num + 2
 			return ImgList
 		ImgList = loadResource(ImgList)
 
@@ -46,7 +46,7 @@ try:
 			num = 1
 			while(num <= 30):
 				ImgList.append(pygame.image.load('Resources/Sun/Sun'+ str(num) +'.png'))
-				num = num + 1
+				num = num + 2
 			return ImgList
 		ImgList = loadResource(ImgList)
 
