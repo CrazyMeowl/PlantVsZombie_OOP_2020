@@ -49,7 +49,7 @@ try:
 				self.peaImgList.append(pygame.image.load('Resources/Pea/Pea'+ str(nonsense) +'.png'))
 				self.sunImgList.append(pygame.image.load('Resources/Sun/Sun'+ str(nonsense) +'.png'))
 				nonsense = nonsense + 2
-<<<<<<< Updated upstream
+
 
 
 
@@ -61,10 +61,7 @@ try:
 				["   ","   ","   ","   ","   ","   ","   ","   ","   "],
 				["   ","   ","   ","   ","   ","   ","   ","   ","   "]]
 			self.plantList = []
-=======
 
-
->>>>>>> Stashed changes
 
 		def resetTheGame(self):
 			self.board = [
