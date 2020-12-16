@@ -38,7 +38,7 @@ try:
 		
 		def attack(self,inPlant):
 			inPlant.health = inPlant.health - 2.5
-			if(inPlant.health < 5):
+			if(inPlant.health <= 0):
 				self.stop = 0
 				
 		def isCollide(self,inPlant):
