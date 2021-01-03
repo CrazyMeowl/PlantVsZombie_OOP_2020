@@ -43,7 +43,7 @@ try:
 
 
 	#### Some Variable for the game ####
-	Z1 = zombie(4,8)
+	
 	#menubutton = button((0,255,0), 150,255,250,100,'Menu')
 	game = logic(surface)
 	mainMenu = mainmenu()
@@ -56,12 +56,14 @@ try:
 	ColDown = 0
 	ColUp = 0
 	Mouse.setState(1)
+	level = 0
 	#### End of Variable ####
 
 
 	#### C L E A R   S C R E E N ####
 	game.clearConsole()
 	#################################
+	
 	while True:
 		while isActive == 'mainmenu':
 			mainMenu.menu.mainloop(surface)
@@ -79,6 +81,9 @@ try:
 		#game loop
 		while isActive == 'game':
 			#check event
+			if(level == 0):
+				level += 1
+				game.levelOne()
 			for event in pygame.event.get():
 				##event Quit
 				if event.type == pygame.QUIT:
@@ -103,7 +108,6 @@ try:
 						print(xu,yu)
 						if(xu == xd and yu == yd):
 							if(Mouse.getStateInString() == 'clr'):
-								game.setBoard(xd,yd,'   ')
 								game.removePlant(xd,yd)
 							else:
 								if(game.board[yd][xd] == '   '):
@@ -121,10 +125,22 @@ try:
 			#menubutton.draw(game.window,(0,0,0))
 			
 			for plant in game.plantList:
+				if(plant.health < 2.5):
+					inCol = plant.c
+					inRow = plant.r
+					game.removePlant(inCol,inRow)
 				plant.draw(game.window)
+			#print(game.plantList)
+			for zom in game.zomList:
+				if(zom.stop == 0):
+					zom.move()
 
-			Z1.move()
-			Z1.draw(game.window)
+				
+				for plant in game.plantList:
+					zom.isCollide(plant)
+
+				#print(zom.stop)
+				zom.draw(game.window)
 			game.drawPlant()
 			
 

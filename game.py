@@ -3,6 +3,8 @@ try:
 	import pygame
 	import os
 	from plant import *
+	from zombie import *
+
 	class logic:
 
 		def __init__(self,surface):
@@ -58,7 +60,7 @@ try:
 				["   ","   ","   ","   ","   ","   ","   ","   ","   "],
 				["   ","   ","   ","   ","   ","   ","   ","   ","   "]]
 			self.plantList = []
-
+			self.zomList = []
 		def timeCounter(self):
 			self.timecount = self.timecount + 1
 			if self.timecount % self.FPS == 0:
@@ -132,12 +134,20 @@ try:
 
 		#plant list for the game (static)
 		plantList = []
+		peaList = []
+		sunCounter = 0
+
 
 		def addAPlant(self,inCol,inRow,mouseStateInString):
 			if mouseStateInString == 'pea':
-				self.plantList.append(peaShooter(inCol,inRow))
+				pea = peaShooter(inCol,inRow)
+				self.peaList.append(pea)
+				self.plantList.append(pea)
+
 			elif mouseStateInString == 'sun':
+				sunCounter = sunCounter + 1
 				self.plantList.append(sunFlower(inCol,inRow))
+
 			elif mouseStateInString == 'wal':
 				self.plantList.append(wallNutt(inCol,inRow))
 
@@ -148,7 +158,9 @@ try:
 					if(plant.c == inCol and plant.r == inRow):
 						#print(arraylist.index(pea))
 						self.plantList.pop(self.plantList.index(plant))
+						self.setBoard(inCol,inRow,'   ')
 				i = i + 1
+
 
 		def drawPlant(self):
 			#self.board
@@ -167,8 +179,20 @@ try:
 						self.window.blit(self.sunImgList[self.frame],(330 + x * 72,66 + y * 76))
 					x += 1
 				y += 1
-		
+		#######
+		##ZOM##
+		#######
+		zomList = []
+		def addAZombie(self,inCol,inRow):
+			self.zomList.append(zombie(inCol,inRow))
 
+
+		def levelOne(self):
+			self.addAZombie(8,4)
+			self.addAZombie(10,0)
+			self.addAZombie(10,1)
+			self.addAZombie(9,2)
+			self.addAZombie(9,3)
 	##################### END OF LOGIC CLASS ###############
 
 	# START OF CLASS MICE #

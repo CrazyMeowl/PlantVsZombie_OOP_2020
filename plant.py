@@ -1,4 +1,7 @@
-#This try is for error catching 
+#This try is for error catching
+
+#PEA DELAY 3 SEC#
+#SUN DELAY 15 SEC#
 try:
 	import pygame
 	# START OF CLASS PLANT #
@@ -7,7 +10,7 @@ try:
 		plantImgList = []
 		def loadResource(ImgList):
 			num = 1
-			while(num <= 30):
+			while(num <= 30): 
 				ImgList.append(pygame.image.load('Resources/blank.png'))
 				num = num + 1
 			return ImgList
@@ -39,6 +42,11 @@ try:
 				num = num + 2
 			return ImgList
 		ImgList = loadResource(ImgList)
+
+###################################################################################################################
+		def shoot():
+			print("Nibba")
+
 
 	class sunFlower(plant):
 		ImgList = []
