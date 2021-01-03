@@ -60,6 +60,7 @@ try:
 				["   ","   ","   ","   ","   ","   ","   ","   ","   "],
 				["   ","   ","   ","   ","   ","   ","   ","   ","   "]]
 			self.plantList = []
+
 			self.zomList = []
 		def timeCounter(self):
 			self.timecount = self.timecount + 1
@@ -185,7 +186,6 @@ try:
 		zomList = []
 		def addAZombie(self,inCol,inRow):
 			self.zomList.append(zombie(inCol,inRow))
-
 
 		def levelOne(self):
 			self.addAZombie(8,4)

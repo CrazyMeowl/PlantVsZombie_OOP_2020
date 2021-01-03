@@ -125,7 +125,8 @@ try:
 			#menubutton.draw(game.window,(0,0,0))
 			
 			for plant in game.plantList:
-				if(plant.health < 2.5):
+				if(plant.health <= 0):
+
 					inCol = plant.c
 					inRow = plant.r
 					game.removePlant(inCol,inRow)
@@ -135,10 +136,8 @@ try:
 				if(zom.stop == 0):
 					zom.move()
 
-				
 				for plant in game.plantList:
 					zom.isCollide(plant)
-
 				#print(zom.stop)
 				zom.draw(game.window)
 			game.drawPlant()
