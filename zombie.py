@@ -35,6 +35,10 @@ try:
 		def move(self):
 			if self.x >= 330:
 				self.x = self.x - 1
+				return 1
+			else:
+				#print("Game Over")
+				return 0
 		
 		def attack(self,inPlant):
 			inPlant.health = inPlant.health - 2.5

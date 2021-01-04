@@ -50,8 +50,6 @@ try:
 				self.sunImgList.append(pygame.image.load('Resources/Sun/Sun'+ str(nonsense) +'.png'))
 				nonsense = nonsense + 2
 
-
-
 		def resetTheGame(self):
 			self.board = [
 				["   ","   ","   ","   ","   ","   ","   ","   ","   "],
@@ -59,13 +57,16 @@ try:
 				["   ","   ","   ","   ","   ","   ","   ","   ","   "],
 				["   ","   ","   ","   ","   ","   ","   ","   ","   "],
 				["   ","   ","   ","   ","   ","   ","   ","   ","   "]]
+				
 			self.plantList = []
-
 			self.zomList = []
+			self.timecount = 0
+
 		def timeCounter(self):
 			self.timecount = self.timecount + 1
 			if self.timecount % self.FPS == 0:
 				self.time = self.time + 1
+
 		def gameRedraw(self):
 			#redraw the bg on to the window every frame
 			self.window.blit(self.bg, (0, 0))
@@ -127,6 +128,10 @@ try:
 		def callPauseMenu(self,state):
 			state = 'pausemenu'
 			return state
+
+		def gameOver(self,state):
+			state = 'gameover'
+			return state
 		##pause menu part
 
 			
@@ -135,18 +140,16 @@ try:
 
 		#plant list for the game (static)
 		plantList = []
-		peaList = []
 		sunCounter = 0
 
 
 		def addAPlant(self,inCol,inRow,mouseStateInString):
+			
 			if mouseStateInString == 'pea':
-				pea = peaShooter(inCol,inRow)
-				self.peaList.append(pea)
-				self.plantList.append(pea)
+				self.plantList.append(peaShooter(inCol,inRow))
 
 			elif mouseStateInString == 'sun':
-				sunCounter = sunCounter + 1
+				self.sunCounter = self.sunCounter + 1
 				self.plantList.append(sunFlower(inCol,inRow))
 
 			elif mouseStateInString == 'wal':
