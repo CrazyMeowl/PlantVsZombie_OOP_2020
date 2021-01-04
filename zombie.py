@@ -40,15 +40,29 @@ try:
 				#print("Game Over")
 				return 0
 		
-		def attack(self,inPlant):
-			inPlant.health = inPlant.health - 2.5
-			if(inPlant.health <= 0):
-				self.stop = 0
-				
+
+			
+		'''	
 		def isCollide(self,inPlant):
 			if(self.x == inPlant.rightBorder and self.r == inPlant.r):
 				self.stop = 1
 				self.attack(inPlant)
+				return 0
+			else:
+				return 1
+		'''
+		def isCollide(self,plantList):
+			self.collide = 0
+			for plant in plantList:
+				if(self.x == plant.rightBorder and self.r == plant.r):
+					self.stop = 1
+					self.collide = 1
+					plant.health = plant.health - 2.5
+					if(plant.health <= 0):
+						self.stop = 0
+			if(self.collide == 0):
+				self.stop = 0	
+
 ## for bug and print out bug (only for compile error or runtime error) [ DO NOT FIX ]
 except Exception as Bug:
 	print(Bug)

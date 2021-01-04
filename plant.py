@@ -25,6 +25,10 @@ try:
 		def shoot(self):
 			#print("Shooting")
 			pass
+#this draw method is not useless
+#it for WalNut #DoNotRemove Thingy
+		def draw(self,x):
+			pass
 
 	class peaShooter(plant):
 		ImgList = []
@@ -37,7 +41,7 @@ try:
 		ImgList = loadResource(ImgList)
 
 		def shoot(self):
-			pass
+			print("nibba")
 ###################################################################################################################
 		
 

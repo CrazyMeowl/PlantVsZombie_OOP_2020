@@ -113,13 +113,13 @@ try:
 					if(game.isHoverOnBoard()):
 						#print(game.getColRow())
 						xu,yu = game.getColRow()
-						print(xu,yu)
+						#print(xu,yu)
 						if(xu == xd and yu == yd):
 							if(Mouse.getStateInString() == 'clr'):
 								game.removePlant(xd,yd)
 							else:
 								if(game.board[yd][xd] == '   '):
-									game.setBoard(xd,yd,Mouse.getStateInString())
+									#game.setBoard(xd,yd,Mouse.getStateInString())
 									game.addAPlant(xd,yd,Mouse.getStateInString())
 									game.clearConsole()
 									game.getBoard()
@@ -130,14 +130,14 @@ try:
 						
 			
 			game.gameRedraw()
-			#menubutton.draw(game.window,(0,0,0))
+			
 			
 			for plant in game.plantList:
 				if(plant.health <= 0):
-
 					inCol = plant.c
 					inRow = plant.r
-					game.removePlant(inCol,inRow)
+					game.killAPlant(inCol,inRow)
+				plant.draw(surface)
 				if(game.timecount % 30 == 0):
 					plant.shoot()
 			#print(game.plantList)
@@ -146,8 +146,8 @@ try:
 					if(zom.move() == 0):
 							isActive = game.gameOver(isActive)
 
-				for plant in game.plantList:
-					zom.isCollide(plant)
+				zom.isCollide(game.plantList)
+				#print(game.plantList)
 				#print(zom.stop)
 				zom.draw(game.window)
 
