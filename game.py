@@ -4,12 +4,12 @@ try:
 	import os
 	from plant import *
 	from zombie import *
-
+	pygame.init()
 	class logic:
 
 		def __init__(self,surface):
 			#for starting the window
-			
+			self.player = player(0)
 			self.window	= surface
 			pygame.display.set_caption("Plant vs Zombies in O.O.P")
 			#for the time counter
@@ -50,8 +50,6 @@ try:
 				self.sunImgList.append(pygame.image.load('Resources/Sun/Sun'+ str(nonsense) +'.png'))
 				nonsense = nonsense + 2
 
-
-
 		def resetTheGame(self):
 			self.board = [
 				["   ","   ","   ","   ","   ","   ","   ","   ","   "],
@@ -59,16 +57,20 @@ try:
 				["   ","   ","   ","   ","   ","   ","   ","   ","   "],
 				["   ","   ","   ","   ","   ","   ","   ","   ","   "],
 				["   ","   ","   ","   ","   ","   ","   ","   ","   "]]
+				
 			self.plantList = []
-
 			self.zomList = []
+			self.timecount = 0
+			self.player.reset()
 		def timeCounter(self):
 			self.timecount = self.timecount + 1
 			if self.timecount % self.FPS == 0:
 				self.time = self.time + 1
+
 		def gameRedraw(self):
 			#redraw the bg on to the window every frame
 			self.window.blit(self.bg, (0, 0))
+			self.window.blit(self.updateSunBalance(),(100,100))
 
 
 		#update the disp
@@ -83,10 +85,9 @@ try:
 			print(self.board[3])
 			print(self.board[4])
 			return self.board
-			
+
 		def setBoard(self,inCol,inRow,mouseStateInString):
 			self.board[inRow][inCol] = mouseStateInString
-
 		def isHoverOnBoard(self):
 			x,y = pygame.mouse.get_pos()
 			if(x >= 330 and x <= 977 and y>=66 and y <= 446):
@@ -127,6 +128,10 @@ try:
 		def callPauseMenu(self,state):
 			state = 'pausemenu'
 			return state
+
+		def gameOver(self,state):
+			state = 'gameover'
+			return state
 		##pause menu part
 
 			
@@ -135,24 +140,46 @@ try:
 
 		#plant list for the game (static)
 		plantList = []
-		peaList = []
 		sunCounter = 0
 
 
 		def addAPlant(self,inCol,inRow,mouseStateInString):
+			
 			if mouseStateInString == 'pea':
-				pea = peaShooter(inCol,inRow)
-				self.peaList.append(pea)
-				self.plantList.append(pea)
-
+				if(self.player.subSun(100)):
+					self.plantList.append(peaShooter(inCol,inRow))
+					self.board[inRow][inCol] = mouseStateInString
+				else:
+					print("Failed ")
 			elif mouseStateInString == 'sun':
-				sunCounter = sunCounter + 1
-				self.plantList.append(sunFlower(inCol,inRow))
-
+				if(self.player.subSun(50)):
+					self.sunCounter = self.sunCounter + 1
+					self.plantList.append(sunFlower(inCol,inRow))
+					self.board[inRow][inCol] = mouseStateInString
+				else:
+					print("Failed ")
 			elif mouseStateInString == 'wal':
-				self.plantList.append(wallNutt(inCol,inRow))
-
+				if(self.player.subSun(50)):
+					self.plantList.append(wallNutt(inCol,inRow))
+					self.board[inRow][inCol] = mouseStateInString
+				else:
+					print("Failed ")
 		def removePlant(self,inCol,inRow):
+			i = 0
+			while i < len(self.plantList):
+				for plant in self.plantList:
+					if(plant.c == inCol and plant.r == inRow):
+						#print(arraylist.index(pea))
+						self.plantList.pop(self.plantList.index(plant))
+						if(self.board[inRow][inCol] == 'pea'):
+							self.player.addSun(100)
+						elif(self.board[inRow][inCol] == 'sun'):
+							self.player.addSun(50)
+						elif(self.board[inRow][inCol] == 'wal'):
+							self.player.addSun(50)
+						self.setBoard(inCol,inRow,'   ')
+				i = i + 1
+		def killAPlant(self,inCol,inRow):
 			i = 0
 			while i < len(self.plantList):
 				for plant in self.plantList:
@@ -161,7 +188,6 @@ try:
 						self.plantList.pop(self.plantList.index(plant))
 						self.setBoard(inCol,inRow,'   ')
 				i = i + 1
-
 
 		def drawPlant(self):
 			#self.board
@@ -188,11 +214,17 @@ try:
 			self.zomList.append(zombie(inCol,inRow))
 
 		def levelOne(self):
+			self.player.setSun(1000)
 			self.addAZombie(8,4)
-			self.addAZombie(10,0)
-			self.addAZombie(10,1)
-			self.addAZombie(9,2)
-			self.addAZombie(9,3)
+			#self.addAZombie(10,0)
+			#self.addAZombie(10,1)
+			#self.addAZombie(9,2)
+			#self.addAZombie(9,3)
+	####
+		font = pygame.font.SysFont('Arial',30)
+		def updateSunBalance(self):
+			sunLabel = self.font.render(str(self.player.sunBalance),1,(0,0,0))
+			return sunLabel
 	##################### END OF LOGIC CLASS ###############
 
 	# START OF CLASS MICE #
@@ -232,10 +264,28 @@ try:
 
 	########## P L A Y E R ##########
 	class player:
-		def __init__(self):
+		def __init__(self,sun):
+			self.name = 0
+			self.sunBalance = sun
+			self.score = 0
+
+		def reset(self):
 			self.name = 0
 			self.sunBalance = 0
 			self.score = 0
+		#sun
+		def addSun(self,amount):
+			self.sunBalance = self.sunBalance + amount
+
+		def subSun(self,amount):
+			if(self.sunBalance - amount >= 0):
+				self.sunBalance = self.sunBalance - amount
+				return 1 #1 mean affordable
+			else:
+				return 0 #0 mean not
+		def setSun(self,amount):
+			self.sunBalance = amount
+
 			
 ## for bug and print out bug (only for compile error or runtime error) [ DO NOT FIX ]
 except Exception as Bug:

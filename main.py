@@ -48,6 +48,7 @@ try:
 	game = logic(surface)
 	mainMenu = mainmenu()
 	pauseMenu = pausemenu()
+	gameOver = gameover()
 
 	Mouse = mice()
 
@@ -73,21 +74,28 @@ try:
 
 		while isActive == 'pausemenu':
 			pauseMenu.menu.mainloop(surface)
-			if(pauseMenu.menu.enable() == None and pauseMenu.state == 'normal'):
+			if(pauseMenu.menu.enable() == None and pauseMenu.state == 'resume'):
 				isActive = 'game'
 			else:
 				isActive = 'mainmenu'
-			
+		
+		while isActive == 'gameover':
+			gameOver.menu.mainloop(surface)
+			if(gameOver.menu.enable() == None and gameOver.state == 'restart'):
+				game.resetTheGame()
+				isActive = 'game'
+			else:
+				isActive = 'mainmenu'				
+				
 		#game loop
 		while isActive == 'game':
 			#check event
-			if(level == 0):
-				level += 1
+			if(game.timecount == 100):
 				game.levelOne()
 			for event in pygame.event.get():
 				##event Quit
 				if event.type == pygame.QUIT:
-					isActive = 'menu'
+					isActive = 'pausemenu'
 					quit()
 				
 				elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -105,13 +113,13 @@ try:
 					if(game.isHoverOnBoard()):
 						#print(game.getColRow())
 						xu,yu = game.getColRow()
-						print(xu,yu)
+						#print(xu,yu)
 						if(xu == xd and yu == yd):
 							if(Mouse.getStateInString() == 'clr'):
 								game.removePlant(xd,yd)
 							else:
 								if(game.board[yd][xd] == '   '):
-									game.setBoard(xd,yd,Mouse.getStateInString())
+									#game.setBoard(xd,yd,Mouse.getStateInString())
 									game.addAPlant(xd,yd,Mouse.getStateInString())
 									game.clearConsole()
 									game.getBoard()
@@ -122,27 +130,28 @@ try:
 						
 			
 			game.gameRedraw()
-			#menubutton.draw(game.window,(0,0,0))
+			
 			
 			for plant in game.plantList:
 				if(plant.health <= 0):
-
 					inCol = plant.c
 					inRow = plant.r
-					game.removePlant(inCol,inRow)
-				plant.draw(game.window)
+					game.killAPlant(inCol,inRow)
+				plant.draw(surface)
+				if(game.timecount % 30 == 0):
+					plant.shoot()
 			#print(game.plantList)
 			for zom in game.zomList:
 				if(zom.stop == 0):
-					zom.move()
+					if(zom.move() == 0):
+							isActive = game.gameOver(isActive)
 
-				for plant in game.plantList:
-					zom.isCollide(plant)
+				zom.isCollide(game.plantList)
+				#print(game.plantList)
 				#print(zom.stop)
 				zom.draw(game.window)
-			game.drawPlant()
-			
 
+			game.drawPlant()
 			game.dispUpdate() 
 			game.timeCounter()
 			game.clock.tick(game.FPS)

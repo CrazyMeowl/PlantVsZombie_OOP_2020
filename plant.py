@@ -5,16 +5,11 @@
 try:
 	import pygame
 	# START OF CLASS PLANT #
+	class pea:
+		pass
 	class plant:
 		List = []
 		plantImgList = []
-		def loadResource(ImgList):
-			num = 1
-			while(num <= 30): 
-				ImgList.append(pygame.image.load('Resources/blank.png'))
-				num = num + 1
-			return ImgList
-		plantImgList = loadResource(plantImgList)
 
 
 		def __init__(self,inCol,inRow):
@@ -27,11 +22,13 @@ try:
 
 			self.rightBorder = self.x + 36
 
-		
-
-		def draw(self,window):
+		def shoot(self):
+			#print("Shooting")
 			pass
-
+#this draw method is not useless
+#it for WalNut #DoNotRemove Thingy
+		def draw(self,x):
+			pass
 
 	class peaShooter(plant):
 		ImgList = []
@@ -43,9 +40,10 @@ try:
 			return ImgList
 		ImgList = loadResource(ImgList)
 
+		def shoot(self):
+			print("nibba")
 ###################################################################################################################
-		def shoot():
-			print("Nibba")
+		
 
 
 	class sunFlower(plant):
