@@ -58,6 +58,7 @@ try:
 	ColUp = 0
 	Mouse.setState(1)
 	level = 0
+	a = pea(1,1)
 	#### End of Variable ####
 
 
@@ -90,13 +91,14 @@ try:
 		#game loop
 		while isActive == 'game':
 			#check event
-			if(game.timecount == 100):
+			if(game.timecount == 150):
 				game.levelOne()
 			for event in pygame.event.get():
+				#Mouse.update()
 				##event Quit
 				if event.type == pygame.QUIT:
 					isActive = 'pausemenu'
-					quit()
+					#quit()
 				
 				elif event.type == pygame.MOUSEBUTTONDOWN:
 					if(game.isHoverOnBoard()):
@@ -122,24 +124,19 @@ try:
 									#game.setBoard(xd,yd,Mouse.getStateInString())
 									game.addAPlant(xd,yd,Mouse.getStateInString())
 									game.clearConsole()
-									game.getBoard()
+									#game.getBoard()
 							
 				else:
 					pass	
 								
-						
 			
+			game.addSunBalance()
 			game.gameRedraw()
 			
 			
-			for plant in game.plantList:
-				if(plant.health <= 0):
-					inCol = plant.c
-					inRow = plant.r
-					game.killAPlant(inCol,inRow)
-				plant.draw(surface)
-				if(game.timecount % 30 == 0):
-					plant.shoot()
+			game.checkPlantList()
+			game.checkPeaList()
+			game.checkZomList()
 			#print(game.plantList)
 			for zom in game.zomList:
 				if(zom.stop == 0):

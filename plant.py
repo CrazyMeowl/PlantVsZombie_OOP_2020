@@ -24,7 +24,7 @@ try:
 
 		def shoot(self):
 			#print("Shooting")
-			pass
+			return 0
 #this draw method is not useless
 #it for WalNut #DoNotRemove Thingy
 		def draw(self,x):
@@ -41,7 +41,7 @@ try:
 		ImgList = loadResource(ImgList)
 
 		def shoot(self):
-			print("nibba")
+			return 1
 ###################################################################################################################
 		
 
@@ -81,7 +81,19 @@ try:
 				self.__frame = 2
 			window.blit(self.ImgList[self.__frame],(self.x,self.y))
 
-
+	class pea():
+		def __init__(self,inCol,inRow):
+			self.r = inRow
+			self.c = inCol
+			self.x = self.c*72 + 330
+			self.y = self.r*76 + 66
+			self.hit = 0
+			#print("pea")
+			
+		def move(self):
+			if(self.x <= 1000):
+				self.x = self.x + 5
+			#print("X: " + str(self.x) + " Y: " + str(self.y))
 
 ## for bug and print out bug (only for compile error or runtime error) [ DO NOT FIX ]
 except Exception as Bug:

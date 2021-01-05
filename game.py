@@ -42,6 +42,8 @@ try:
 			self.peaImgList = []
 			self.sunImgList = []
 			self.walImgList = []
+			self.peaImg = pygame.image.load('Resources/pea.png')
+			self.sunCounterImg = pygame.image.load('Resources/sunCounter.png')
 			self.walImgList.append(pygame.image.load('Resources/Wal/Wal1.png'))
 			self.walImgList.append(pygame.image.load('Resources/Wal/Wal2.png'))
 			self.walImgList.append(pygame.image.load('Resources/Wal/Wal3.png'))
@@ -60,7 +62,9 @@ try:
 				
 			self.plantList = []
 			self.zomList = []
+			self.peaList = []
 			self.timecount = 0
+			self.sunCounter = 0
 			self.player.reset()
 		def timeCounter(self):
 			self.timecount = self.timecount + 1
@@ -70,7 +74,9 @@ try:
 		def gameRedraw(self):
 			#redraw the bg on to the window every frame
 			self.window.blit(self.bg, (0, 0))
-			self.window.blit(self.updateSunBalance(),(100,100))
+			self.window.blit(self.sunCounterImg,(284,10))
+			self.window.blit(self.updateSunBalance(),(334,20))
+			
 
 
 		#update the disp
@@ -140,6 +146,7 @@ try:
 
 		#plant list for the game (static)
 		plantList = []
+		peaList = []
 		sunCounter = 0
 
 
@@ -189,6 +196,27 @@ try:
 						self.setBoard(inCol,inRow,'   ')
 				i = i + 1
 
+		def checkPlantList(self):
+			for plant in self.plantList:
+				if(plant.health <= 0):
+					self.killAPlant(plant.c,plant.r)
+				plant.draw(self.window)
+				if(self.timecount % 30 == 0):
+					if(plant.shoot() == 1):
+						#print("shot")
+						self.peaList.append(pea(plant.c,plant.r))
+		def checkPeaList(self):
+			for pea in self.peaList:
+				if(pea.x >= 1000 or pea.hit == 1):
+					self.peaList.pop(self.peaList.index(pea))
+				else:
+					for zom in self.zomList:
+						if((pea.r == zom.r) and (pea.x <= zom.x) and (pea.x + 60 >= zom.x)):
+							zom.health = zom.health - 25
+							pea.hit = 1
+							#print("HIT HIT HIT")
+					pea.move()
+						#self.clearConsole()
 		def drawPlant(self):
 			#self.board
 			if self.frame + 1 == 15:
@@ -206,16 +234,26 @@ try:
 						self.window.blit(self.sunImgList[self.frame],(330 + x * 72,66 + y * 76))
 					x += 1
 				y += 1
+			for pea in self.peaList:
+				self.window.blit(self.peaImg,(pea.x,pea.y))
+			
+			
+
+
 		#######
 		##ZOM##
 		#######
 		zomList = []
 		def addAZombie(self,inCol,inRow):
 			self.zomList.append(zombie(inCol,inRow))
+		def checkZomList(self):
+			for zom in self.zomList:
+				if(zom.health <= 0):
+					self.zomList.pop(self.zomList.index(zom))
 
 		def levelOne(self):
-			self.player.setSun(1000)
-			self.addAZombie(8,4)
+			#self.player.setSun(1000)
+			self.addAZombie(10,4)
 			#self.addAZombie(10,0)
 			#self.addAZombie(10,1)
 			#self.addAZombie(9,2)
@@ -225,6 +263,12 @@ try:
 		def updateSunBalance(self):
 			sunLabel = self.font.render(str(self.player.sunBalance),1,(0,0,0))
 			return sunLabel
+
+		def addSunBalance(self):
+			if(self.timecount % 60 == 0):
+				self.player.sunBalance += 50
+				self.player.sunBalance += 25*self.sunCounter
+
 	##################### END OF LOGIC CLASS ###############
 
 	# START OF CLASS MICE #
