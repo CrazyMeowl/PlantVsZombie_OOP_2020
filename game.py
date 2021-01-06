@@ -2,6 +2,7 @@
 try:
 	import pygame
 	import os
+	import random
 	from plant import *
 	from zombie import *
 	pygame.init()
@@ -37,7 +38,8 @@ try:
 			["   ","   ","   ","   ","   ","   ","   ","   ","   "],
 			["   ","   ","   ","   ","   ","   ","   ","   ","   "]]
 			self.frame = 0
-
+			self.isActive = 'mainmenu'
+			self.godmode = False
 			nonsense = 1
 			self.peaImgList = []
 			self.sunImgList = []
@@ -51,7 +53,12 @@ try:
 				self.peaImgList.append(pygame.image.load('Resources/Pea/Pea'+ str(nonsense) +'.png'))
 				self.sunImgList.append(pygame.image.load('Resources/Sun/Sun'+ str(nonsense) +'.png'))
 				nonsense = nonsense + 2
-
+		def godMode(self,state):
+			self.godmode = state
+			if(state == True):
+				self.player.setSun(99999)
+			else:
+				self.player.setSun(0)
 		def resetTheGame(self):
 			self.board = [
 				["   ","   ","   ","   ","   ","   ","   ","   ","   "],
@@ -64,12 +71,14 @@ try:
 			self.zomList = []
 			self.peaList = []
 			self.timecount = 0
+			self.time = 0
 			self.sunCounter = 0
 			self.player.reset()
 		def timeCounter(self):
 			self.timecount = self.timecount + 1
 			if self.timecount % self.FPS == 0:
 				self.time = self.time + 1
+			#print(self.time)
 
 		def gameRedraw(self):
 			#redraw the bg on to the window every frame
@@ -118,7 +127,7 @@ try:
 			x,y = pygame.mouse.get_pos()
 			if(x >= self.__seedX and x <= self.__seedX+66*4 and y >= self.__seedY and y <= self.__seedY + 91):
 				state = int((x-20)/66)+1
-				print(state)
+				#print(state)
 				return state
 		## end of seed part
 
@@ -132,17 +141,16 @@ try:
 				return False
 
 		def callPauseMenu(self):
-			state = 'pausemenu'
-			return state
+			self.isActive = 'pausemenu'
 
 		def callQuitMenu(self):
-			state = 'quitmenu'
-			return state
+			self.isActive = 'quitmenu'
 
 		def gameOver(self):
-			state = 'gameover'
-			return state
+			self.isActive = 'gameover'
 		##pause menu part
+		def win(self):
+			self.isActive = 'win'
 
 			
 		def clearConsole(self):
@@ -160,21 +168,18 @@ try:
 				if(self.player.subSun(100)):
 					self.plantList.append(peaShooter(inCol,inRow))
 					self.board[inRow][inCol] = mouseStateInString
-				else:
-					print("Failed ")
+				
 			elif mouseStateInString == 'sun':
 				if(self.player.subSun(50)):
 					self.sunCounter = self.sunCounter + 1
 					self.plantList.append(sunFlower(inCol,inRow))
 					self.board[inRow][inCol] = mouseStateInString
-				else:
-					print("Failed ")
+				
 			elif mouseStateInString == 'wal':
 				if(self.player.subSun(50)):
 					self.plantList.append(wallNutt(inCol,inRow))
 					self.board[inRow][inCol] = mouseStateInString
-				else:
-					print("Failed ")
+				
 		def removePlant(self,inCol,inRow):
 			i = 0
 			while i < len(self.plantList):
@@ -216,9 +221,12 @@ try:
 				else:
 					for zom in self.zomList:
 						if((pea.r == zom.r) and (pea.x <= zom.x) and (pea.x + 60 >= zom.x)):
-							zom.health = zom.health - 25
+							if(self.godmode == True):
+								zom.health = 0
+							else:
+								zom.health = zom.health - 25
 							pea.hit = 1
-							#print("HIT HIT HIT")
+							
 					pea.move()
 						#self.clearConsole()
 		def drawPlant(self):
@@ -254,14 +262,34 @@ try:
 			for zom in self.zomList:
 				if(zom.health <= 0):
 					self.zomList.pop(self.zomList.index(zom))
-
+		# LEVELs #
 		def levelOne(self):
-			#self.player.setSun(1000)
-			self.addAZombie(10,4)
-			#self.addAZombie(10,0)
-			#self.addAZombie(10,1)
-			#self.addAZombie(9,2)
-			#self.addAZombie(9,3)
+			i = 0
+			numberOfZombie = 10
+			while( i < numberOfZombie):
+				A = random.randint(10,20)
+				B = random.randint(0,4)
+				self.addAZombie(A,B)
+				i = i + 1
+		def levelTwo(self):
+			i = 0
+			numberOfZombie = 30
+			while( i < numberOfZombie):
+				A = random.randint(10,20)
+				B = random.randint(0,4)
+				self.addAZombie(A,B)
+				i = i + 1
+		# Add more level Here #
+		def update(self):
+			levelOneStartTime = 10
+			levelTwoStartTime = 70
+			winTime = 110
+			if(self.timecount == 15*levelOneStartTime):
+				self.levelOne()
+			if(self.timecount == 15*levelTwoStartTime):
+				self.levelTwo()
+			if(self.timecount == 15*winTime):
+				self.win()
 	####
 		font = pygame.font.SysFont('Arial',30)
 		def updateSunBalance(self):
@@ -269,7 +297,7 @@ try:
 			return sunLabel
 
 		def addSunBalance(self):
-			if(self.timecount % 60 == 0):
+			if((self.timecount % 60 == 0)):
 				self.player.sunBalance += 50
 				self.player.sunBalance += 25*self.sunCounter
 
@@ -294,8 +322,6 @@ try:
 				self.stateInString = 'wal'
 			if self.state == 4:
 				self.stateInString = 'clr'
-			#print(self.state)
-			#print(self.stateInString)
 
 
 		def getState(self):
@@ -333,6 +359,7 @@ try:
 				return 0 #0 mean not
 		def setSun(self,amount):
 			self.sunBalance = amount
+			
 
 			
 ## for bug and print out bug (only for compile error or runtime error) [ DO NOT FIX ]

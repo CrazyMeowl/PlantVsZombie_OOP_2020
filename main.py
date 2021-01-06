@@ -34,13 +34,6 @@ try:
 
 	pygame.init()
 	surface = pygame.display.set_mode((1000, 500))
-	#state of the game
-	isActive = 'mainmenu'
-	PAUSE = False
-
-
-
-
 
 	#### Some Variable for the game ####
 	
@@ -50,6 +43,7 @@ try:
 	pauseMenu = pausemenu()
 	gameOver = gameover()
 	quitMenu = quitmenu()
+	winMenu = winmenu()
 
 	Mouse = mice()
 
@@ -68,43 +62,69 @@ try:
 	#################################
 	
 	while True:
-		while isActive == 'mainmenu':
+		while game.isActive == 'mainmenu':
 			mainMenu.menu.mainloop(surface)
+			mainMenu.menu.enable()
 			game.resetTheGame()
-			if(mainMenu.menu.enable() == None):
-				isActive = 'game'
+			game.godMode(False)
+			game.isActive = 'game'
+				
 
-		while isActive == 'pausemenu':
+		while game.isActive == 'pausemenu':
 			pauseMenu.menu.mainloop(surface)
-			if(pauseMenu.menu.enable() == None and pauseMenu.state == 'resume'):
-				isActive = 'game'
+			pauseMenu.menu.enable()
+			
+			if(pauseMenu.state == 'resume'):
+				game.isActive = 'game'
 			else:
-				isActive = 'mainmenu'
-		
-		while isActive == 'gameover':
-			gameOver.menu.mainloop(surface)
-			if(gameOver.menu.enable() == None and gameOver.state == 'restart'):
-				game.resetTheGame()
-				isActive = 'game'
-			else:
-				isActive = 'mainmenu'				
+				game.isActive = 'mainmenu'
+			
+			print(pauseMenu.state)
 
-		while isActive == 'quitmenu':
+		
+		while game.isActive == 'gameover':
+			gameOver.menu.mainloop(surface)
+			gameOver.menu.enable()
+			if(gameOver.state == 'restart'):
+				game.resetTheGame()
+				game.godMode(False)
+				game.isActive = 'game'
+			elif(gameOver.state == 'godmode'):
+				game.resetTheGame()
+				game.godMode(True)
+				game.isActive = 'game'
+			else:
+				game.isActive = 'mainmenu'	
+
+		while game.isActive == 'win':
+			winMenu.menu.mainloop(surface)
+			winMenu.menu.enable()
+			if(winMenu.state == 'restart'):
+				game.resetTheGame()
+				game.godMode(False)
+				game.isActive = 'game'
+			elif(winMenu.state == 'godmode'):
+				game.resetTheGame()
+				game.godMode(True)
+				game.isActive = 'game'
+			else:
+				game.isActive = 'mainmenu'			
+
+		while game.isActive == 'quitmenu':
 			quitMenu.menu.mainloop(surface)
 			if(quitMenu.menu.enable() == None and quitMenu.state == 'resume'):
-				isActive = 'game'
+				game.isActive = 'game'
+
 			
 
 		#game loop
-		while isActive == 'game':
+		while game.isActive == 'game':
 			#check event
-			if(game.timecount == 150):
-				game.levelOne()
 			for event in pygame.event.get():
 				#Mouse.update()
 				##event Quit
 				if event.type == pygame.QUIT:
-					isActive = 'quitmenu'
+					game.callQuitMenu()
 					#quit()
 				
 				elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -114,7 +134,7 @@ try:
 					if(game.isHoverOnSeed()):
 						Mouse.setState(game.hoverOnSeed())
 					if(game.isHoverOnPause()):
-						isActive = game.callPauseMenu()
+						game.callPauseMenu()
 						
 						
 						
@@ -146,15 +166,15 @@ try:
 			for zom in game.zomList:
 				if(zom.stop == 0):
 					if(zom.move() == 0):
-							isActive = game.gameOver()
+							game.gameOver()
 
 				zom.isCollide(game.plantList)
 				#print(game.plantList)
 				#print(zom.stop)
 				zom.draw(game.window)
-
+			game.update()
 			game.drawPlant()
-			game.dispUpdate() 
+			game.dispUpdate()
 			game.timeCounter()
 			game.clock.tick(game.FPS)
 

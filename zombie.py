@@ -34,30 +34,20 @@ try:
 			window.blit(self.ImgList[self.__frame],(self.x,self.y))
 		def move(self):
 			if self.x >= 330:
-				self.x = self.x - 1
+				self.x = self.x - 2
 				return 1
 			else:
 				#print("Game Over")
 				return 0
 		
 
-			
-		'''	
-		def isCollide(self,inPlant):
-			if(self.x == inPlant.rightBorder and self.r == inPlant.r):
-				self.stop = 1
-				self.attack(inPlant)
-				return 0
-			else:
-				return 1
-		'''
 		def isCollide(self,plantList):
 			self.collide = 0
 			for plant in plantList:
-				if(self.x == plant.rightBorder and self.r == plant.r):
+				if((self.x > plant.rightBorder) and (self.x - 3 < plant.rightBorder) and (self.r == plant.r)):
 					self.stop = 1
 					self.collide = 1
-					plant.health = plant.health - 2.5
+					plant.health = plant.health - 1.5
 					if(plant.health <= 0):
 						self.stop = 0
 			if(self.collide == 0):
