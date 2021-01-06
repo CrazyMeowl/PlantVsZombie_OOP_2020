@@ -49,6 +49,7 @@ try:
 	mainMenu = mainmenu()
 	pauseMenu = pausemenu()
 	gameOver = gameover()
+	quitMenu = quitmenu()
 
 	Mouse = mice()
 
@@ -87,7 +88,13 @@ try:
 				isActive = 'game'
 			else:
 				isActive = 'mainmenu'				
-				
+
+		while isActive == 'quitmenu':
+			quitMenu.menu.mainloop(surface)
+			if(quitMenu.menu.enable() == None and quitMenu.state == 'resume'):
+				isActive = 'game'
+			
+
 		#game loop
 		while isActive == 'game':
 			#check event
@@ -97,7 +104,7 @@ try:
 				#Mouse.update()
 				##event Quit
 				if event.type == pygame.QUIT:
-					isActive = 'pausemenu'
+					isActive = 'quitmenu'
 					#quit()
 				
 				elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -107,7 +114,7 @@ try:
 					if(game.isHoverOnSeed()):
 						Mouse.setState(game.hoverOnSeed())
 					if(game.isHoverOnPause()):
-						isActive = game.callPauseMenu(isActive)
+						isActive = game.callPauseMenu()
 						
 						
 						
@@ -125,9 +132,7 @@ try:
 									game.addAPlant(xd,yd,Mouse.getStateInString())
 									game.clearConsole()
 									#game.getBoard()
-							
-				else:
-					pass	
+								
 								
 			
 			game.addSunBalance()
@@ -141,7 +146,7 @@ try:
 			for zom in game.zomList:
 				if(zom.stop == 0):
 					if(zom.move() == 0):
-							isActive = game.gameOver(isActive)
+							isActive = game.gameOver()
 
 				zom.isCollide(game.plantList)
 				#print(game.plantList)

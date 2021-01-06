@@ -131,11 +131,15 @@ try:
 			else:
 				return False
 
-		def callPauseMenu(self,state):
+		def callPauseMenu(self):
 			state = 'pausemenu'
 			return state
 
-		def gameOver(self,state):
+		def callQuitMenu(self):
+			state = 'quitmenu'
+			return state
+
+		def gameOver(self):
 			state = 'gameover'
 			return state
 		##pause menu part

@@ -76,7 +76,7 @@ try:
 			self.theme.background_color=(0, 10, 0, 25)
 			self.font = pygame_menu.font.FONT_NEVIS
 			self.theme.widget_font = self.font
-			self.image = pygame_menu.baseimage.BaseImage(image_path='Resources/bgmenu.png', drawing_mode=pygame_menu.baseimage.IMAGE_MODE_SIMPLE)
+			self.image = pygame_menu.baseimage.BaseImage(image_path='Resources/gameover.png', drawing_mode=pygame_menu.baseimage.IMAGE_MODE_SIMPLE)
 			self.theme.background_color = self.image
 			self.theme.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_NONE
 			self.state = 'normal'
@@ -85,8 +85,29 @@ try:
 			self.menu.add_button('Return to main menu', self.callMain)
 			self.menu.add_button('Quit',self.quit)
 
+	class quitmenu(mainmenu):
 
-		
+		def resume(self):
+			self.state = 'resume'
+			self.menu.disable()
+
+		def quit(self):
+			quit()
+
+		def __init__(self):
+			self.theme = pygame_menu.themes.THEME_ORANGE.copy()
+			self.theme.title_background_color=(0, 0, 0)
+			self.theme.background_color=(0, 10, 0, 25)
+			self.font = pygame_menu.font.FONT_NEVIS
+			self.theme.widget_font = self.font
+			self.image = pygame_menu.baseimage.BaseImage(image_path='Resources/quitmenu.png', drawing_mode=pygame_menu.baseimage.IMAGE_MODE_SIMPLE)
+			self.theme.background_color = self.image
+			self.theme.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_NONE
+			self.state = 'normal'
+			self.menu = pygame_menu.Menu(500, 1000, ' ',theme = self.theme)
+			self.menu.add_button('? ! ? NO ? ! ?', self.resume)
+			self.menu.add_button('? ! ? YES ? ! ?',self.quit)
+	
 
 
 		
