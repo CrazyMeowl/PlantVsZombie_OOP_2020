@@ -1,6 +1,7 @@
 #This try is for error catching 
 try:
 	import pygame
+	#from pygame import mixer
 	import os
 	import random
 	from plant import *
@@ -8,7 +9,7 @@ try:
 	pygame.init()
 	class logic:
 
-		def __init__(self,surface):
+		def __init__(self,surface,mixer):
 			#for starting the window
 			self.player = player(0)
 			self.window	= surface
@@ -53,6 +54,15 @@ try:
 				self.peaImgList.append(pygame.image.load('Resources/Pea/Pea'+ str(nonsense) +'.png'))
 				self.sunImgList.append(pygame.image.load('Resources/Sun/Sun'+ str(nonsense) +'.png'))
 				nonsense = nonsense + 2
+			#for sound
+			self.mixer = mixer
+			self.mixer.music.load('Resources/Sound/background.mp3')
+			self.shootSound = mixer.Sound('Resources/Sound/shoot.ogg')
+			self.hitSound = mixer.Sound('Resources/Sound/hit.ogg')
+			self.plantSound = mixer.Sound('Resources/Sound/plantAPlant.ogg')
+			self.shovelSound = mixer.Sound('Resources/Sound/shovel.ogg')
+		def backgroundMusic(self):
+			self.mixer.music.play(-1)
 		def godMode(self,state):
 			self.godmode = state
 			if(state == True):
@@ -163,23 +173,25 @@ try:
 
 
 		def addAPlant(self,inCol,inRow,mouseStateInString):
-			
+			plant = False
 			if mouseStateInString == 'pea':
 				if(self.player.subSun(100)):
 					self.plantList.append(peaShooter(inCol,inRow))
 					self.board[inRow][inCol] = mouseStateInString
-				
+					plant = True
 			elif mouseStateInString == 'sun':
 				if(self.player.subSun(50)):
 					self.sunCounter = self.sunCounter + 1
 					self.plantList.append(sunFlower(inCol,inRow))
 					self.board[inRow][inCol] = mouseStateInString
-				
+					plant = True
 			elif mouseStateInString == 'wal':
 				if(self.player.subSun(50)):
 					self.plantList.append(wallNutt(inCol,inRow))
 					self.board[inRow][inCol] = mouseStateInString
-				
+					plant = True
+			if(plant == True):
+				self.plantSound.play()	
 		def removePlant(self,inCol,inRow):
 			i = 0
 			while i < len(self.plantList):
@@ -194,6 +206,7 @@ try:
 						elif(self.board[inRow][inCol] == 'wal'):
 							self.player.addSun(50)
 						self.setBoard(inCol,inRow,'   ')
+						self.shovelSound.play()
 				i = i + 1
 		def killAPlant(self,inCol,inRow):
 			i = 0
@@ -206,6 +219,7 @@ try:
 				i = i + 1
 
 		def checkPlantList(self):
+			sound = 0
 			for plant in self.plantList:
 				if(plant.health <= 0):
 					self.killAPlant(plant.c,plant.r)
@@ -213,11 +227,17 @@ try:
 				if(self.timecount % 30 == 0):
 					if(plant.shoot() == 1):
 						#print("shot")
+						sound = 1
 						self.peaList.append(pea(plant.c,plant.r))
+			if(sound == 1):
+				self.shootSound.play()		
 		def checkPeaList(self):
 			for pea in self.peaList:
 				if(pea.x >= 1000 or pea.hit == 1):
 					self.peaList.pop(self.peaList.index(pea))
+					if(pea.hit == 1):
+						self.hitSound.play()
+
 				else:
 					for zom in self.zomList:
 						if((pea.r == zom.r) and (pea.x <= zom.x) and (pea.x + 60 >= zom.x)):

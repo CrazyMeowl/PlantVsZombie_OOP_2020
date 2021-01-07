@@ -26,6 +26,7 @@ try:
 	import os
 	import pygame_menu
 	import pygame,sys
+	from pygame import mixer
 	from game import *
 	from plant import *
 	from zombie import *
@@ -38,7 +39,7 @@ try:
 	#### Some Variable for the game ####
 	
 	#menubutton = button((0,255,0), 150,255,250,100,'Menu')
-	game = logic(surface)
+	game = logic(surface,mixer)
 	mainMenu = mainmenu()
 	pauseMenu = pausemenu()
 	gameOver = gameover()
@@ -60,8 +61,9 @@ try:
 	#### C L E A R   S C R E E N ####
 	game.clearConsole()
 	#################################
-	
+	game.backgroundMusic()
 	while True:
+		
 		while game.isActive == 'mainmenu':
 			mainMenu.menu.mainloop(surface)
 			mainMenu.menu.enable()
@@ -103,7 +105,7 @@ try:
 				game.resetTheGame()
 				game.godMode(False)
 				game.isActive = 'game'
-			elif(winMenu.state == 'godmode'):
+			elif(winMenu .state == 'godmode'):
 				game.resetTheGame()
 				game.godMode(True)
 				game.isActive = 'game'
@@ -116,10 +118,15 @@ try:
 				game.isActive = 'game'
 
 			
-
+		
+			
 		#game loop
+
+		
 		while game.isActive == 'game':
-			#check event
+			#for background music:
+			
+			
 			for event in pygame.event.get():
 				#Mouse.update()
 				##event Quit
