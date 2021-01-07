@@ -70,6 +70,7 @@ try:
 			game.resetTheGame()
 			game.godMode(False)
 			game.isActive = 'game'
+
 				
 
 		while game.isActive == 'pausemenu':
@@ -78,11 +79,11 @@ try:
 			
 			if(pauseMenu.state == 'resume'):
 				game.isActive = 'game'
+				game.unpauseBackgroundMusic()
 			else:
 				game.isActive = 'mainmenu'
+				game.unpauseBackgroundMusic()
 			
-			print(pauseMenu.state)
-
 		
 		while game.isActive == 'gameover':
 			gameOver.menu.mainloop(surface)
@@ -91,12 +92,15 @@ try:
 				game.resetTheGame()
 				game.godMode(False)
 				game.isActive = 'game'
+				game.unpauseBackgroundMusic()
 			elif(gameOver.state == 'godmode'):
 				game.resetTheGame()
 				game.godMode(True)
 				game.isActive = 'game'
+				game.unpauseBackgroundMusic()
 			else:
-				game.isActive = 'mainmenu'	
+				game.isActive = 'mainmenu'
+				game.unpauseBackgroundMusic()	
 
 		while game.isActive == 'win':
 			winMenu.menu.mainloop(surface)
@@ -105,17 +109,21 @@ try:
 				game.resetTheGame()
 				game.godMode(False)
 				game.isActive = 'game'
+				game.unpauseBackgroundMusic()
 			elif(winMenu .state == 'godmode'):
 				game.resetTheGame()
 				game.godMode(True)
 				game.isActive = 'game'
+				game.unpauseBackgroundMusic()
 			else:
-				game.isActive = 'mainmenu'			
+				game.isActive = 'mainmenu'
+				game.unpauseBackgroundMusic()		
 
 		while game.isActive == 'quitmenu':
 			quitMenu.menu.mainloop(surface)
 			if(quitMenu.menu.enable() == None and quitMenu.state == 'resume'):
 				game.isActive = 'game'
+				game.unpauseBackgroundMusic()
 
 			
 		
@@ -141,6 +149,7 @@ try:
 					if(game.isHoverOnSeed()):
 						Mouse.setState(game.hoverOnSeed())
 					if(game.isHoverOnPause()):
+						
 						game.callPauseMenu()
 						
 						
@@ -157,7 +166,7 @@ try:
 								if(game.board[yd][xd] == '   '):
 									#game.setBoard(xd,yd,Mouse.getStateInString())
 									game.addAPlant(xd,yd,Mouse.getStateInString())
-									game.clearConsole()
+									#game.clearConsole()
 									#game.getBoard()
 								
 								
@@ -170,15 +179,7 @@ try:
 			game.checkPeaList()
 			game.checkZomList()
 			#print(game.plantList)
-			for zom in game.zomList:
-				if(zom.stop == 0):
-					if(zom.move() == 0):
-							game.gameOver()
 
-				zom.isCollide(game.plantList)
-				#print(game.plantList)
-				#print(zom.stop)
-				zom.draw(game.window)
 			game.update()
 			game.drawPlant()
 			game.dispUpdate()

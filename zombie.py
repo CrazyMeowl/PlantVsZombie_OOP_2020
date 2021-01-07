@@ -51,7 +51,10 @@ try:
 					if(plant.health <= 0):
 						self.stop = 0
 			if(self.collide == 0):
-				self.stop = 0	
+				self.stop = 0
+				return 0
+			else:
+				return 1	
 
 ## for bug and print out bug (only for compile error or runtime error) [ DO NOT FIX ]
 except Exception as Bug:

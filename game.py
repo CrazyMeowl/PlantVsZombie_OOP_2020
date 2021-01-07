@@ -61,8 +61,22 @@ try:
 			self.hitSound = mixer.Sound('Resources/Sound/hit.ogg')
 			self.plantSound = mixer.Sound('Resources/Sound/plantAPlant.ogg')
 			self.shovelSound = mixer.Sound('Resources/Sound/shovel.ogg')
+			self.seedSound = mixer.Sound('Resources/Sound/seedSelect.ogg')
+			self.pauseSound = mixer.Sound('Resources/Sound/pause.ogg')
+			self.zomEatSound = mixer.Sound('Resources/Sound/zomEat.ogg')
+			self.zomEatSound.set_volume(0.5)
+			self.zomDieSound = mixer.Sound('Resources/Sound/zomDie.ogg')
+			self.winSound = mixer.Sound('Resources/Sound/winMusic.ogg')
+			self.loseSound = mixer.Sound('Resources/Sound/loseMusic.ogg')
+			self.sunAddSound = mixer.Sound('Resources/Sound/addSun.ogg')
+			self.sunAddSound.set_volume(0.25)
+			self.startLevelSound = mixer.Sound('Resources/Sound/startLevel.ogg')
 		def backgroundMusic(self):
 			self.mixer.music.play(-1)
+		def pauseBackgroundMusic(self):
+			self.mixer.music.pause()
+		def unpauseBackgroundMusic(self):
+			self.mixer.music.unpause()
 		def godMode(self,state):
 			self.godmode = state
 			if(state == True):
@@ -138,6 +152,7 @@ try:
 			if(x >= self.__seedX and x <= self.__seedX+66*4 and y >= self.__seedY and y <= self.__seedY + 91):
 				state = int((x-20)/66)+1
 				#print(state)
+				self.seedSound.play()
 				return state
 		## end of seed part
 
@@ -146,21 +161,33 @@ try:
 			x,y = pygame.mouse.get_pos()
 			
 			if(x >= self.xPause and x <= self.xPause + 50 and y>= self.yPause and y <= self.yPause + 50):
+				
 				return True
 			else:
 				return False
-
+		##Call menu part
 		def callPauseMenu(self):
 			self.isActive = 'pausemenu'
+			self.pauseBackgroundMusic()
+			self.pauseSound.play()
 
 		def callQuitMenu(self):
 			self.isActive = 'quitmenu'
+			self.pauseBackgroundMusic()
+			self.pauseSound.play()
 
 		def gameOver(self):
 			self.isActive = 'gameover'
-		##pause menu part
+			self.pauseBackgroundMusic()
+			self.loseSound.play()
+
+		
 		def win(self):
 			self.isActive = 'win'
+			self.pauseBackgroundMusic()
+			self.winSound.play()
+
+
 
 			
 		def clearConsole(self):
@@ -279,9 +306,24 @@ try:
 		def addAZombie(self,inCol,inRow):
 			self.zomList.append(zombie(inCol,inRow))
 		def checkZomList(self):
+			zomEatSound = 0
 			for zom in self.zomList:
 				if(zom.health <= 0):
+					self.zomDieSound.play()
 					self.zomList.pop(self.zomList.index(zom))
+
+				else:
+					if(zom.stop == 0):
+						if(zom.move() == 0):
+								self.gameOver()
+
+					if(zom.isCollide(self.plantList) == 1 and self.timecount % 30 == 0):
+						zomEatSound = 1
+					#print(game.plantList)
+					#print(zom.stop)
+					zom.draw(self.window)
+				if(zomEatSound == 1):
+					self.zomEatSound.play()
 		# LEVELs #
 		def levelOne(self):
 			i = 0
@@ -302,13 +344,15 @@ try:
 		# Add more level Here #
 		def update(self):
 			levelOneStartTime = 10
-			levelTwoStartTime = 70
-			winTime = 110
+			levelTwoStartTime = 60
+			
 			if(self.timecount == 15*levelOneStartTime):
+				self.startLevelSound.play()
 				self.levelOne()
 			if(self.timecount == 15*levelTwoStartTime):
+				self.startLevelSound.play()
 				self.levelTwo()
-			if(self.timecount == 15*winTime):
+			if(self.timecount > 15*(levelTwoStartTime+1) and self.zomList == []):
 				self.win()
 	####
 		font = pygame.font.SysFont('Arial',30)
@@ -320,6 +364,7 @@ try:
 			if((self.timecount % 60 == 0)):
 				self.player.sunBalance += 50
 				self.player.sunBalance += 25*self.sunCounter
+				self.sunAddSound.play()
 
 	##################### END OF LOGIC CLASS ###############
 

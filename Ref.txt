@@ -1,0 +1,22 @@
+Audio,image,animation:
+	image Source:
+		https://plantsvszombies.fandom.com/wiki/Main_Page
+	sound Source:
+		https://www.sounds-resource.com/pc_computer/plantsvszombies/sound/1430/
+
+python:
+	https://www.python.org/
+
+pygame:
+	https://www.pygame.org/news
+
+pygame-menu:
+	https://pypi.org/project/pygame-menu/
+
+pygame tutorial:
+	https://www.youtube.com/watch?v=8GF6O6vNXCc&list=PLhTjy8cBISEo3SzET7Fc3-b4miKWp41yX
+
+	youtube.com/watch?v=i6xMBig-pP4&list=PLzMcBGfZo4-lp3jAExUCewBfMx3UZFkh5
+
+	https://www.youtube.com/watch?v=qxwO1wyz50w
+
