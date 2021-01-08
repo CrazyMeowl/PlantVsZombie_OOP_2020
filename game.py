@@ -347,7 +347,7 @@ try:
 				i = i + 1
 		def levelTwo(self):
 			i = 0
-			numberOfZombie = 30
+			numberOfZombie = 500
 			while( i < numberOfZombie):
 				A = random.randint(10,20)
 				B = random.randint(0,4)
