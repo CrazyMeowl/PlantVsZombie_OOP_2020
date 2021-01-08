@@ -171,20 +171,7 @@ try:
 								
 								
 			
-			game.addSunBalance()
-			game.gameRedraw()
-			
-			
-			game.checkPlantList()
-			game.checkPeaList()
-			game.checkZomList()
-			#print(game.plantList)
-
-			game.update()
-			game.drawPlant()
-			game.dispUpdate()
-			game.timeCounter()
-			game.clock.tick(game.FPS)
+			game.mainUpdate()
 
 		
 ## for bug and print out bug (only for compile error or runtime error) [ DO NOT FIX ]

@@ -365,7 +365,18 @@ try:
 				self.player.sunBalance += 50
 				self.player.sunBalance += 25*self.sunCounter
 				self.sunAddSound.play()
-
+		def mainUpdate(self):
+			self.addSunBalance()
+			self.gameRedraw()
+			self.checkPlantList()
+			self.checkPeaList()
+			self.checkZomList()
+			#print(game.plantList)
+			self.update()
+			self.drawPlant()
+			self.dispUpdate()
+			self.timeCounter()
+			self.clock.tick(self.FPS)
 	##################### END OF LOGIC CLASS ###############
 
 	# START OF CLASS MICE #
