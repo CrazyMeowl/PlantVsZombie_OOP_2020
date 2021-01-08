@@ -1,3 +1,6 @@
 
 
 *.pyc
+*.xml
+*.docx
+~$OOP presentation.pptx
