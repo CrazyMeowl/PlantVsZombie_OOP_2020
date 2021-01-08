@@ -166,8 +166,8 @@ try:
 								if(game.board[yd][xd] == '   '):
 									#game.setBoard(xd,yd,Mouse.getStateInString())
 									game.addAPlant(xd,yd,Mouse.getStateInString())
-									#game.clearConsole()
-									#game.getBoard()
+									game.clearConsole()
+									game.getBoard()
 								
 								
 			

@@ -27,8 +27,6 @@ try:
 			return 0
 #this draw method is not useless
 #it for WalNut #DoNotRemove Thingy
-		def draw(self,x):
-			pass
 
 	class peaShooter(plant):
 		ImgList = []
@@ -72,14 +70,7 @@ try:
 			self.__frame = 0
 			self.rightBorder = self.x + 36
 
-		def draw(self,window):
-			if self.health <= 300 and self.health >= 200:
-				self.__frame = 0
-			elif self.health < 200 and self.health >= 100:
-				self.__frame = 1
-			else:
-				self.__frame = 2
-			window.blit(self.ImgList[self.__frame],(self.x,self.y))
+		
 
 	class pea():
 		def __init__(self,inCol,inRow):

@@ -250,7 +250,7 @@ try:
 			for plant in self.plantList:
 				if(plant.health <= 0):
 					self.killAPlant(plant.c,plant.r)
-				plant.draw(self.window)
+				
 				if(self.timecount % 30 == 0):
 					if(plant.shoot() == 1):
 						#print("shot")
@@ -289,12 +289,24 @@ try:
 				while(x <= 8):
 					if self.board[y][x] == 'pea':
 						self.window.blit(self.peaImgList[self.frame],(330 + x * 72,66 + y * 76))
-					if self.board[y][x] == 'sun':
+					elif self.board[y][x] == 'sun':
 						self.window.blit(self.sunImgList[self.frame],(330 + x * 72,66 + y * 76))
+					elif self.board[y][x] == 'wal':
+						for plant in self.plantList:
+							if(plant.r == y and plant.c == x):
+								if plant.health <= 300 and plant.health >= 200:
+									plant.__frame = 0
+								elif plant.health < 200 and plant.health >= 100:
+									plant.__frame = 1
+								else:
+									plant.__frame = 2
+								self.window.blit(plant.ImgList[plant.__frame],(plant.x,plant.y))
+
 					x += 1
 				y += 1
 			for pea in self.peaList:
 				self.window.blit(self.peaImg,(pea.x,pea.y))
+
 			
 			
 
@@ -370,10 +382,10 @@ try:
 			self.gameRedraw()
 			self.checkPlantList()
 			self.checkPeaList()
+			self.drawPlant()
 			self.checkZomList()
 			#print(game.plantList)
 			self.update()
-			self.drawPlant()
 			self.dispUpdate()
 			self.timeCounter()
 			self.clock.tick(self.FPS)
